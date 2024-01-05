@@ -1,4 +1,5 @@
 const express = require('express')
+const mongooseConnect = require('./utils/mongoose')
 const config = require('./config.json')
 const app = express()
 const port = config.port
@@ -13,7 +14,11 @@ app.use('/stats', statsRoutes)
 app.use('/play', playRoutes)
 
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Turning machine Api listening on ${port}`)
+
+    console.log('connecting to mongoose')
+    await mongooseConnect()
+    console.log('connected to mongoose')
 })
 
