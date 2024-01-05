@@ -3,13 +3,14 @@ const config = require('../config.json')
 
 mongoose.set("strictQuery", false);
 
-const mongoDB = config.mongoDBPath;
-
+var mongoDBConnection;
 
 const connect = async () => {
-
-    const connection = await mongoose.connect(mongoDB);
-    return connection
+    if (mongoDBConnection) {
+        return mongoDBConnection
+    }
+    mongoDBConnection = await mongoose.connect(config.mongoDBPath);
+    return mongoDBConnection
 }
 
 module.exports = connect

@@ -11,4 +11,8 @@ const GameSchema = new Schema ({
     mode: [{type: Number, min: 0, max: 9}]
 })
 
-const GameModel = mongoose.model("Game", GameSchema);
+const GameModel = mongoose.model("Game", GameSchema)
+
+GameModel.save()
+
+model.exports = GameModel

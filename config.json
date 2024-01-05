@@ -1,4 +1,4 @@
 {
     "port": 3005,
-    "mongoDBPath": "mongodb://127.0.0.1/my_database" 
+    "mongoDBPath": "mongodb://0.0.0.0:27017/turning" 
 }
