@@ -15,4 +15,4 @@ const GameModel = mongoose.model("Game", GameSchema)
 
 GameModel.save()
 
-model.exports = GameModel
+module.exports = GameModel
