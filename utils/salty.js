@@ -6,8 +6,8 @@ const saltPassword = async (password) => {
     return await bcrypt.hash(password, saltRounds).then((hash) => {return hash}).catch((err) => console.error(err))
 }
 
-const validateUser = (password, hash) => {
-    bcrypt
+const validateUser = async (password, hash) => {
+    return bcrypt
       .compare(password, hash)
       .then(result => {
         return result
