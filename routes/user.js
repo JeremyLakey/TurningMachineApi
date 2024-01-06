@@ -21,12 +21,12 @@ userRoutes.post('/login', bodyParser.json(), async (req, res) => {
     console.log(req.body)
     if(req.body) {
         let user = await UserModel.findOne({name:req.body.name})
-        if (await salty.validateUser(req.body.password, user.password)) {
+        if (req.body.password && await salty.validateUser(req.body.password, user.password)) {
             res.send(user)
         }
         else {
             res.status(403)
-            res.send({id:req.body.id, name:req.body.name})
+            res.send({err:"Something be wrong"})
         }
     }
     else {
