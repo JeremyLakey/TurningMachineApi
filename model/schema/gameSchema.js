@@ -6,13 +6,11 @@ const GameSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    guesses: Number,
+    name: String,
     rules: [{type: Number, min: 0, max: 48}],
     mode: [{type: Number, min: 0, max: 9}]
 })
 
 const GameModel = mongoose.model("Game", GameSchema)
-
-GameModel.save()
 
 module.exports = GameModel

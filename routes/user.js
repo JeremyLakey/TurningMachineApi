@@ -1,17 +1,18 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const UserModel = require('../model/schema/userSchema')
-const StatsModel = require('../model/chema/statsSchema')
+const StatsModel = require('../model/schema/statsSchema')
 const userRoutes = express.Router()
 const salty = require('../utils/salty')
 const tokenUtil = require('../utils/authToken')
 
+// create user
 userRoutes.post('/', bodyParser.json(), async (req, res) => {
     console.log(req.body)
     if(req.body && req.body.name && req.body.password && req) {
         try {  
             let user = await UserModel.create({name:req.body.name, password: await salty.saltPassword(req.body.password)})
-            await StatsModel.create({user:id, name: user.name})
+            await StatsModel.create({user: user.id, name: user.name})
             res.status(201)
             res.send({message:"success"})
         }
@@ -28,6 +29,7 @@ userRoutes.post('/', bodyParser.json(), async (req, res) => {
     
 })
 
+// login user
 userRoutes.post('/login', bodyParser.json(), async (req, res) => {
     if(req.body && req.body.name) {
         const name = req.body.name
@@ -51,6 +53,8 @@ userRoutes.post('/login', bodyParser.json(), async (req, res) => {
     
 })
 
+
+// delete user
 userRoutes.delete('/', tokenUtil.validateAccessToken, async (req, res) => {
     let result = await UserModel.deleteOne(req.user.name)
     if (result.deletedCount <= 0) {
