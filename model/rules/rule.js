@@ -272,7 +272,7 @@ const rule18 = new Rule("Triangle + Square < 6 : Triangle + Square = 6 : Triangl
         return (a + b) < 6
     }
     else if (m === 1) {
-        return (a + b) = 6
+        return (a + b) === 6
     }
     else {
         return (a + b) > 6
@@ -320,7 +320,7 @@ const rule22 = new Rule("Total < 6 : Total = 6 : Total > 6", 3, (a, b, c, m) => 
         return (a + b + c) < 6
     }
     else if (m === 1) {
-        return (a + b + c) = 6
+        return (a + b + c) === 6
     }
     else {
         return (a + b + c) > 6
@@ -352,7 +352,7 @@ const rule24 = new Rule("3 Numbers Straight Descending : 2 Numbers Straight Desc
 })
 
 const rule25 = new Rule("3 Numbers Straight : 2 Numbers Straight: No Straight", 3, (a, b, c, m) => {
-    return rule23(a, b, c, m) || rule24(a, b, c, m)
+    return rule23.rule(a, b, c, m) || rule24.rule(a, b, c, m)
 })
 
 const rule26 = new Rule("Triangle < 3 : Square < 3 : Circle < 3", 3, (a, b, c, m) => {

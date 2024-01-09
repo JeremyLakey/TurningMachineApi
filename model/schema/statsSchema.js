@@ -7,7 +7,6 @@ const StatsSchema = new Schema ({
         ref: "User"
     },
     name: String,
-    gameSolved: {type:Boolean, default: true},
     score: {type: Number, min: 0, default: 0},
     solves: {type: Number, min: 0, default: 0},
     totalGuesses: {type: Number, min: 0, default: 0},
