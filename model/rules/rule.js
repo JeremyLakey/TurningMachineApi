@@ -24,13 +24,17 @@ class Rule {
         this.mode = Math.floor(Math.random() * max)
    }
 
+   setMode(m) {
+    this.mode = m
+   }
+
    toString() {
         return this.description + " : " + this.mode
    }
 }
 
 
-const rule0 = new Rule("Triangle Equal 1 : Triangle > 1", 2, (a, b, c, m) => {
+const rule0 = new Rule("A Equal 1 : A > 1", 2, (a, b, c, m) => {
     if (m === 0) {
         return a === 1
     }
@@ -39,7 +43,7 @@ const rule0 = new Rule("Triangle Equal 1 : Triangle > 1", 2, (a, b, c, m) => {
     }
 })
 
-const rule1 = new Rule("Triangle < 3 : Triangle = 3 : Triangle > 3", 3, (a, b, c, m) => {
+const rule1 = new Rule("A < 3 : A = 3 : A > 3", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < 3
     }
@@ -51,7 +55,7 @@ const rule1 = new Rule("Triangle < 3 : Triangle = 3 : Triangle > 3", 3, (a, b, c
     }
 })
 
-const rule2 = new Rule("Square < 3 : Square = 3 : Square > 3", 3, (a, b, c, m) => {
+const rule2 = new Rule("B < 3 : B = 3 : B > 3", 3, (a, b, c, m) => {
     if (m === 0) {
         return b < 3
     }
@@ -63,7 +67,7 @@ const rule2 = new Rule("Square < 3 : Square = 3 : Square > 3", 3, (a, b, c, m) =
     }
 })
 
-const rule3 = new Rule("Square < 4 : Square = 4 : Square > 4", 3, (a, b, c, m) => {
+const rule3 = new Rule("B < 4 : B = 4 : B > 4", 3, (a, b, c, m) => {
     if (m === 0) {
         return b < 4
     }
@@ -75,7 +79,7 @@ const rule3 = new Rule("Square < 4 : Square = 4 : Square > 4", 3, (a, b, c, m) =
     }
 })
 
-const rule4 = new Rule("Triangle is even : Triangle is odd", 2, (a, b, c, m) => {
+const rule4 = new Rule("A is even : A is odd", 2, (a, b, c, m) => {
     if (m === 0) {
         return a % 2 === 0
     }
@@ -84,7 +88,7 @@ const rule4 = new Rule("Triangle is even : Triangle is odd", 2, (a, b, c, m) => 
     }
 })
 
-const rule5 = new Rule("Square is even : Square is odd", 2, (a, b, c, m) => {
+const rule5 = new Rule("B is even : B is odd", 2, (a, b, c, m) => {
     if (m === 0) {
         return b % 2 === 0
     }
@@ -93,7 +97,7 @@ const rule5 = new Rule("Square is even : Square is odd", 2, (a, b, c, m) => {
     }
 })
 
-const rule6 = new Rule("Circle is even : Circle is odd", 2, (a, b, c, m) => {
+const rule6 = new Rule("C is even : C is odd", 2, (a, b, c, m) => {
     if (m === 0) {
         return c % 2 === 0
     }
@@ -162,7 +166,7 @@ const rule9 = new Rule("Zero 4's : One 4's : Two 4's : Three 4's", 4, (a, b, c, 
     }
 })
 
-const rule10 = new Rule("Triangle < Square : Triangle = Square : Traingle > Square", 3, (a, b, c, m) => {
+const rule10 = new Rule("A < B : A = B : A > B", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < b
     }
@@ -174,7 +178,7 @@ const rule10 = new Rule("Triangle < Square : Triangle = Square : Traingle > Squa
     }
 })
 
-const rule11 = new Rule("Triangle < Circle : Triangle = Circle : Traingle > Circle", 3, (a, b, c, m) => {
+const rule11 = new Rule("A < C : A = C : A > C", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < c
     }
@@ -186,7 +190,7 @@ const rule11 = new Rule("Triangle < Circle : Triangle = Circle : Traingle > Circ
     }
 })
 
-const rule12 = new Rule("Square < Circle : Square = Circle : Square > Circle", 3, (a, b, c, m) => {
+const rule12 = new Rule("B < C : B = C : B > C", 3, (a, b, c, m) => {
     if (m === 0) {
         return b < c
     }
@@ -198,7 +202,7 @@ const rule12 = new Rule("Square < Circle : Square = Circle : Square > Circle", 3
     }
 })
 
-const rule13 = new Rule("Triangle is the smallest : Square is the smallest : Circle is the smallest", 3, (a, b, c, m) => {
+const rule13 = new Rule("A is the smallest : B is the smallest : C is the smallest", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < b && a < c
     }
@@ -210,7 +214,7 @@ const rule13 = new Rule("Triangle is the smallest : Square is the smallest : Cir
     }
 })
 
-const rule14 = new Rule("Triangle is the largest : Square is the largest : Circle is the largest", 3, (a, b, c, m) => {
+const rule14 = new Rule("A is the largest : B is the largest : C is the largest", 3, (a, b, c, m) => {
     if (m === 0) {
         return a > b && a > c
     }
@@ -267,7 +271,7 @@ const rule17 = new Rule("Total is Even : Total is Odd", 2, (a, b, c, m) => {
     }
 })
 
-const rule18 = new Rule("Triangle + Square < 6 : Triangle + Square = 6 : Triangle + Square > 6", 3, (a, b, c, m) => {
+const rule18 = new Rule("A + B < 6 : A + B = 6 : A + B > 6", 3, (a, b, c, m) => {
     if (m === 0) {
         return (a + b) < 6
     }
@@ -355,7 +359,7 @@ const rule25 = new Rule("3 Numbers Straight : 2 Numbers Straight: No Straight", 
     return rule23.rule(a, b, c, m) || rule24.rule(a, b, c, m)
 })
 
-const rule26 = new Rule("Triangle < 3 : Square < 3 : Circle < 3", 3, (a, b, c, m) => {
+const rule26 = new Rule("A < 3 : B < 3 : C < 3", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < 3
     }
@@ -367,7 +371,7 @@ const rule26 = new Rule("Triangle < 3 : Square < 3 : Circle < 3", 3, (a, b, c, m
     }
 })
 
-const rule27 = new Rule("Triangle < 4 : Square < 4 : Circle < 4", 3, (a, b, c, m) => {
+const rule27 = new Rule("A < 4 : B < 4 : C < 4", 3, (a, b, c, m) => {
     if (m === 0) {
         return a < 4
     }
@@ -379,7 +383,7 @@ const rule27 = new Rule("Triangle < 4 : Square < 4 : Circle < 4", 3, (a, b, c, m
     }
 })
 
-const rule28 = new Rule("Triangle = 1 : Square = 1 : Circle = 1", 3, (a, b, c, m) => {
+const rule28 = new Rule("A = 1 : B = 1 : C = 1", 3, (a, b, c, m) => {
     if (m === 0) {
         return a === 1
     }
@@ -391,7 +395,7 @@ const rule28 = new Rule("Triangle = 1 : Square = 1 : Circle = 1", 3, (a, b, c, m
     }
 })
 
-const rule29 = new Rule("Triangle = 3 : Square = 3 : Circle = 3", 3, (a, b, c, m) => {
+const rule29 = new Rule("A = 3 : B = 3 : C = 3", 3, (a, b, c, m) => {
     if (m === 0) {
         return a === 3
     }
@@ -403,7 +407,7 @@ const rule29 = new Rule("Triangle = 3 : Square = 3 : Circle = 3", 3, (a, b, c, m
     }
 })
 
-const rule30 = new Rule("Triangle = 4 : Square = 4 : Circle = 4", 3, (a, b, c, m) => {
+const rule30 = new Rule("A = 4 : B = 4 : C = 4", 3, (a, b, c, m) => {
     if (m === 0) {
         return a === 4
     }
@@ -415,7 +419,7 @@ const rule30 = new Rule("Triangle = 4 : Square = 4 : Circle = 4", 3, (a, b, c, m
     }
 })
 
-const rule31 = new Rule("Triangle > 1 : Square > 1 : Circle > 1", 3, (a, b, c, m) => {
+const rule31 = new Rule("A > 1 : B > 1 : C > 1", 3, (a, b, c, m) => {
     if (m === 0) {
         return a > 1
     }
@@ -427,7 +431,7 @@ const rule31 = new Rule("Triangle > 1 : Square > 1 : Circle > 1", 3, (a, b, c, m
     }
 })
 
-const rule32 = new Rule("Triangle > 3 : Square > 3 : Circle > 3", 3, (a, b, c, m) => {
+const rule32 = new Rule("A > 3 : B > 3 : C > 3", 3, (a, b, c, m) => {
     if (m === 0) {
         return a > 3
     }
@@ -439,7 +443,7 @@ const rule32 = new Rule("Triangle > 3 : Square > 3 : Circle > 3", 3, (a, b, c, m
     }
 })
 
-const rule33 = new Rule("Triangle is Even : Triangle is Odd : Square is Even : Square is Odd : Circle is Even : Circle is Odd", 6, (a, b, c, m) => {
+const rule33 = new Rule("A is Even : A is Odd : B is Even : B is Odd : C is Even : C is Odd", 6, (a, b, c, m) => {
     if (m === 0) {
         return a % 2 === 0
     }
@@ -460,7 +464,7 @@ const rule33 = new Rule("Triangle is Even : Triangle is Odd : Square is Even : S
     }
 })
 
-const rule34 = new Rule("Triangle is among the smallest : Square is among the smallest : Circle is among the smallest", 3, (a, b, c, m) => {
+const rule34 = new Rule("A is among the smallest : B is among the smallest : C is among the smallest", 3, (a, b, c, m) => {
     if (m === 0) {
         return a <= b && a <= c
     }
@@ -472,7 +476,7 @@ const rule34 = new Rule("Triangle is among the smallest : Square is among the sm
     }
 })
 
-const rule35 = new Rule("Triangle is among the largest : Square is among the largest : Circle is among the largest", 3, (a, b, c, m) => {
+const rule35 = new Rule("A is among the largest : B is among the largest : C is among the largest", 3, (a, b, c, m) => {
     if (m === 0) {
         return a >= b && a >= c
     }
@@ -497,7 +501,7 @@ const rule36 = new Rule("Total is a multiple of 3 : Total is a multiple of 4 : T
     }
 })
 
-const rule37 = new Rule("Triangle + Square = 4 : Triangle + Circle = 4 : Circle + Square = 4", 3, (a, b, c, m) => {
+const rule37 = new Rule("A + B = 4 : A + C = 4 : C + B = 4", 3, (a, b, c, m) => {
     if (m === 0) {
         return a + b === 4
     }
@@ -509,7 +513,7 @@ const rule37 = new Rule("Triangle + Square = 4 : Triangle + Circle = 4 : Circle 
     }
 })
 
-const rule38 = new Rule("Triangle + Square = 6 : Triangle + Circle = 6 : Circle + Square = 6", 3, (a, b, c, m) => {
+const rule38 = new Rule("A + B = 6 : A + C = 6 : C + B = 6", 3, (a, b, c, m) => {
     if (m === 0) {
         return a + b === 6
     }
@@ -521,7 +525,7 @@ const rule38 = new Rule("Triangle + Square = 6 : Triangle + Circle = 6 : Circle 
     }
 })
 
-const rule39 = new Rule("Triangle = 1 : Triangle > 1 : Square = 1 : Square > 1 : Circle = 1 : Circle > 1", 6, (a, b, c, m) => {
+const rule39 = new Rule("A = 1 : A > 1 : B = 1 : B > 1 : C = 1 : C > 1", 6, (a, b, c, m) => {
     if (m === 0) {
         return a === 1
     }
@@ -542,7 +546,7 @@ const rule39 = new Rule("Triangle = 1 : Triangle > 1 : Square = 1 : Square > 1 :
     }
 })
 
-const rule40 = new Rule("Triangle < 3 : Triangle = 3 : Triangle > 3 : Square < 3 : Square = 3 : Square > 3 : Circle < 3 : Circle = 3 : Circle > 3", 9, (a, b, c, m) => {
+const rule40 = new Rule("A < 3 : A = 3 : A > 3 : B < 3 : B = 3 : B > 3 : C < 3 : C = 3 : C > 3", 9, (a, b, c, m) => {
     if (m === 0) {
         return a < 3
     }
@@ -572,7 +576,7 @@ const rule40 = new Rule("Triangle < 3 : Triangle = 3 : Triangle > 3 : Square < 3
     }
 })
 
-const rule41 = new Rule("Triangle < 4 : Triangle = 4 : Triangle > 4 : Square < 4 : Square = 4 : Square > 4 : Circle < 4 : Circle = 4 : Circle > 4", 9, (a, b, c, m) => {
+const rule41 = new Rule("A < 4 : A = 4 : A > 4 : B < 4 : B = 4 : B > 4 : C < 4 : C = 4 : C > 4", 9, (a, b, c, m) => {
     if (m === 0) {
         return a < 4
     }
@@ -602,7 +606,7 @@ const rule41 = new Rule("Triangle < 4 : Triangle = 4 : Triangle > 4 : Square < 4
     }
 })
 
-const rule42 = new Rule("Triangle is the Smallest : Triangle is the Largest : Square is the Smallest : Square is the Largest : Circle is the Smallest : Circle is the Largest", 6, (a, b, c, m) => {
+const rule42 = new Rule("A is the Smallest : A is the Largest : B is the Smallest : B is the Largest : C is the Smallest : C is the Largest", 6, (a, b, c, m) => {
     if (m === 0) {
         return a < b && a < c
     }
@@ -623,7 +627,7 @@ const rule42 = new Rule("Triangle is the Smallest : Triangle is the Largest : Sq
     }
 })
 
-const rule43 = new Rule("Triangle < Square : Triangle = Square : Triangle > Square : Triangle < Circle : Triangle = Circle : Triangle > Circle", 6, (a, b, c, m) => {
+const rule43 = new Rule("A < B : A = B : A > B : A < C : A = C : A > C", 6, (a, b, c, m) => {
     if (m === 0) {
         return a < b
     }
@@ -644,7 +648,7 @@ const rule43 = new Rule("Triangle < Square : Triangle = Square : Triangle > Squa
     }
 })
 
-const rule44 = new Rule("Square < Triangle : Square = Triangle : Square > Triangle : Square < Circle : Square = Circle : Square > Circle", 6, (a, b, c, m) => {
+const rule44 = new Rule("B < A : B = A : B > A : B < C : B = C : B > C", 6, (a, b, c, m) => {
     if (m === 0) {
         return b < a
     }
@@ -758,7 +762,7 @@ const rule47 = new Rule("Zero 1's : One 1's : Two 1's : Zero 4's : One 4's : Two
     }
 })
 
-const rule48 = new Rule("Triangle < Square : Triangle < Circle : Square < Circle : Triangle = Square : Triangle = Circle : Square = Circle : Triangle > Square : Triangle > Circle : Square > Circle", 9, (a, b, c, m) => {
+const rule48 = new Rule("A < B : A < C : B < C : A = B : A = B : B = C : A > B : A > C : B > C", 9, (a, b, c, m) => {
     if (m === 0) {
         return a < b
     }
