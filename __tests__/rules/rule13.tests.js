@@ -26,7 +26,7 @@ describe("Rule 13", () => {
     })
 
     test('Works as intended for B is the smallest', () => {
-        rule.setMode(0)
+        rule.setMode(1)
         for(let i = 0; i < 100; i++) {
             let count = 0
             let compare = 0
@@ -45,7 +45,7 @@ describe("Rule 13", () => {
     })
 
     test('Works as intended for C is the smallest', () => {
-        rule.setMode(0)
+        rule.setMode(2)
         for(let i = 0; i < 100; i++) {
             let count = 0
             let compare = 0

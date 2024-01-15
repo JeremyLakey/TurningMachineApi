@@ -32,7 +32,7 @@ describe("Rule 7", () => {
     })
 
     test('Works as intended for One 1\'s', () => {
-        rule.setMode(0)
+        rule.setMode(1)
         for(let i = 0; i < 100; i++) {
             let count = 0
             let compare = 0
@@ -51,7 +51,7 @@ describe("Rule 7", () => {
     })
 
     test('Works as intended for Two 1\'s', () => {
-        rule.setMode(0)
+        rule.setMode(2)
         for(let i = 0; i < 100; i++) {
             let count = 0
             let compare = 0
@@ -70,7 +70,7 @@ describe("Rule 7", () => {
     })
 
     test('Works as intended for Three 1\'s', () => {
-        rule.setMode(0)
+        rule.setMode(3)
         for(let i = 0; i < 100; i++) {
             let count = 0
             let compare = 0
