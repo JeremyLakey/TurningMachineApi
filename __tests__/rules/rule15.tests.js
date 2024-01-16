@@ -1,11 +1,19 @@
 
 const rules = require("../../model/rules/rule")
-const rule = rules[1]
+const rule = rules[15]
 
-// "A < 3 : A = 3 : A > 3"
+// "More Evens than Odds : More Odds than Evens"
 
-describe("Rule 0", () => {
-    test('Works as intended for A = 1', () => {
+const countOdds = (a, b, c) => {
+    let total = 0
+    if (a % 2 === 1) total++
+    if (b % 2 === 1) total++
+    if (c % 2 === 1) total++
+    return total
+}
+
+describe("Rule 15", () => {
+    test('Works as intended for More Evens than Odds', () => {
         rule.setMode(0)
         for(let i = 0; i < 100; i++) {
             let count = 0
@@ -14,17 +22,17 @@ describe("Rule 0", () => {
                 for(let b = 1; b <= 5; b++) {
                     for(let c = 1; c <=5 ; c++) {
                         if(rule.checkRule(a,b,c)) count++
-                        if(a === 1) compare++
+                        if(countOdds(a, b, c) < 2) compare++
                     }
                 }
             }
-            expect(count).toBe(25)
+            expect(count).toBe(44)
             expect(count).toBe(compare)
         }
         
     })
 
-    test('Works as intended for A > 1', () => {
+    test('Works as intended for More Odds than Evens', () => {
         rule.setMode(1)
         for(let i = 0; i < 100; i++) {
             let count = 0
@@ -33,19 +41,14 @@ describe("Rule 0", () => {
                 for(let b = 1; b <= 5; b++) {
                     for(let c = 1; c <=5 ; c++) {
                         if(rule.checkRule(a,b,c)) count++
-                        if(a > 1) compare++
+                        if(countOdds(a, b, c) >= 2) compare++
                     }
                 }
             }
-            expect(count).toBe(100)
+            expect(count).toBe(81)
             expect(count).toBe(compare)
         }
         
-    })
-
-    test('Implement Me', () => {
-        let count = 0
-        expect(count).toBe(1)
     })
 } 
 )
