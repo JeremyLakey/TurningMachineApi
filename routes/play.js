@@ -21,9 +21,9 @@ playRoutes.post("/start", [tokenUtil.validateAccessToken, bodyParser.json()], as
     try {  
         let currentGame = await GameModel.findOne({user:req.user.id})
         if (currentGame) { 
-            
-            StatsModel.updateOne({user:req.user.id}, {$inc: {"totalGuesses": 10}})
-            GameModel.updateOne({user:req.user.id}, {user: req.user.id, name:req.user.name, rules: game.rules, modes: game.modes})
+            let stat = await StatsModel.findOne({user:req.user.id})
+            await StatsModel.updateOne({user:req.user.id}, {totalGuesses: stat.totalGuesses + 10})
+            await GameModel.updateOne({user:req.user.id}, {user: req.user.id, name:req.user.name, rules: game.rules, modes: game.modes})
             
             res.status(200)
             res.send(game.rules)
