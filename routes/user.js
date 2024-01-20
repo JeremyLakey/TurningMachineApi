@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const UserModel = require('../model/schema/userSchema')
 const StatsModel = require('../model/schema/statsSchema')
+const GameModel = require('../model/schema/gameSchema')
 const userRoutes = express.Router()
 const salty = require('../utils/salty')
 const tokenUtil = require('../utils/authToken')
@@ -12,7 +13,7 @@ userRoutes.post('/', bodyParser.json(), async (req, res) => {
     if(req.body && req.body.name && req.body.password && req) {
         try {  
             let user = await UserModel.create({name:req.body.name, password: await salty.saltPassword(req.body.password)})
-            await StatsModel.create({user: user.id, name: user.name})
+            await StatsModel.create({user: user._id, name: user.name})
             res.status(201)
             res.send({message:"success"})
         }
@@ -36,7 +37,7 @@ userRoutes.post('/login', bodyParser.json(), async (req, res) => {
         let user = await UserModel.findOne({name:name})
 
         if (req.body.password && user && await salty.validateUser(req.body.password, user.password)) {
-            let token = tokenUtil.generateAccessToken(name)
+            let token = tokenUtil.generateAccessToken(name, user._id)
             res.status(201)
             res.send(token)
         }
@@ -62,7 +63,9 @@ userRoutes.delete('/', tokenUtil.validateAccessToken, async (req, res) => {
         res.send({err:"Nothing was deleted"})
         return
     }
-    await StatsModel.deleteOne(req.user.name)
+    await StatsModel.deleteOne(req.user.id)
+    
+    await GameModel.deleteOne(req.user.id)
 
     res.status(200)
     res.send(req.user)

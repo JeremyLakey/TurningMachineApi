@@ -8,7 +8,7 @@ const GameSchema = new Schema ({
     },
     name: String,
     rules: [{type: Number, min: 0, max: 48}],
-    mode: [{type: Number, min: 0, max: 9}]
+    modes: [{type: Number, min: 0, max: 9}]
 })
 
 const GameModel = mongoose.model("Game", GameSchema)

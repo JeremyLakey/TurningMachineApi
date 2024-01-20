@@ -3,8 +3,8 @@ const secret = config.secret
 
 const jwt = require('jsonwebtoken');
 
-const generateAccessToken = (username) => {
-    return jwt.sign({username:username}, secret, { expiresIn: '1800s' });
+const generateAccessToken = (username, id) => {
+    return jwt.sign({username:username, id}, secret, { expiresIn: '1800s' });
 }
 
 const validateAccessToken = (req, res, next) => {
