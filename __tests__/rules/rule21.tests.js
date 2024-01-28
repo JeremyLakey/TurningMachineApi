@@ -4,7 +4,7 @@ const rule = rules[21]
 
 // "Ascending order : Descending order : No order"
 
-describe("Rule 0", () => {
+describe("Rule 21", () => {
     test('Works as intended for Ascending order', () => {
         rule.setMode(0)
         let count = 0
