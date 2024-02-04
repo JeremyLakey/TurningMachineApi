@@ -5,7 +5,7 @@ const rule = rules[3]
 // "B < 4 : B = 4 : B > 4"
 
 describe("Rule 3", () => {
-    test('Works as intended for A < 3', () => {
+    test('Works as intended for B < 4', () => {
         rule.setMode(0)
         let count = 0
         let compare = 0
@@ -14,6 +14,7 @@ describe("Rule 3", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(b < 4) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -22,7 +23,7 @@ describe("Rule 3", () => {
         
     })
 
-    test('Works as intended for A = 3', () => {
+    test('Works as intended for B = 4', () => {
         rule.setMode(1)
         let count = 0
         let compare = 0
@@ -31,6 +32,7 @@ describe("Rule 3", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(b === 4) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -39,8 +41,8 @@ describe("Rule 3", () => {
         
     })
 
-    test('Works as intended for A > 3', () => {
-        rule.setMode(1)
+    test('Works as intended for B > 4', () => {
+        rule.setMode(2)
         let count = 0
         let compare = 0
         for(let a = 1; a <= 5; a++) {
@@ -48,6 +50,7 @@ describe("Rule 3", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(b > 4) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }

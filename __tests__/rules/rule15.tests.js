@@ -22,6 +22,7 @@ describe("Rule 15", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(countOdds(a, b, c) < 2) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -39,6 +40,7 @@ describe("Rule 15", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(countOdds(a, b, c) >= 2) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }

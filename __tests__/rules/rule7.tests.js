@@ -21,6 +21,7 @@ describe("Rule 7", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(count(a, b, c) === 0) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -37,6 +38,7 @@ describe("Rule 7", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(count(a, b, c) === 1) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -54,6 +56,7 @@ describe("Rule 7", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(count(a, b, c) === 2) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -71,6 +74,7 @@ describe("Rule 7", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(count(a, b, c) === 3) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }

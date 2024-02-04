@@ -4,7 +4,7 @@ const rule = rules[20]
 
 // "A pair exists : No pair exists"
 
-describe("Rule 0", () => {
+describe("Rule 20", () => {
     test('Works as intended for A pair exists', () => {
         rule.setMode(0)
         for(let i = 0; i < 100; i++) {
@@ -15,6 +15,7 @@ describe("Rule 0", () => {
                     for(let c = 1; c <=5 ; c++) {
                         if(rule.checkRule(a,b,c)) count++
                         if((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b)) compare++
+                        expect(count).toBe(compare)
                     }
                 }
             }
@@ -34,6 +35,7 @@ describe("Rule 0", () => {
                     for(let c = 1; c <=5 ; c++) {
                         if(rule.checkRule(a,b,c)) count++
                         if(!((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b))) compare++
+                        expect(count).toBe(compare)
                     }
                 }
             }

@@ -15,6 +15,7 @@ describe("Rule 10", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(a < b) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -32,6 +33,7 @@ describe("Rule 10", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(a === b) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -49,6 +51,7 @@ describe("Rule 10", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(a > b) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }

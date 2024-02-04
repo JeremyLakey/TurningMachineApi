@@ -4,7 +4,7 @@ const rule = rules[19]
 
 // "Triple number : Double number : No repeting numbers"
 
-describe("Rule 0", () => {
+describe("Rule 19", () => {
     test('Works as intended for Triple Number', () => {
         rule.setMode(0)
         let count = 0
@@ -14,6 +14,7 @@ describe("Rule 0", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(a === b && a === c) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -31,6 +32,7 @@ describe("Rule 0", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b)) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
@@ -47,6 +49,7 @@ describe("Rule 0", () => {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
                     if(a !== b && c !== b && a !== c) compare++
+                    expect(count).toBe(compare)
                 }
             }
         }
