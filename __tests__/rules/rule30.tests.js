@@ -1,10 +1,10 @@
 
 const rules = require("../../model/rules/rule")
-const rule = rules[29]
+const rule = rules[30]
 
-// "A = 3 : B = 3 : C = 3"
+// "A = 4 : B = 4 : C = 4"
 
-describe("Rule 29", () => {
+describe("Rule 30", () => {
     test('Works as intended for A = 4', () => {
         rule.setMode(0)
         let count = 0
