@@ -49,7 +49,7 @@ describe("Rule 16", () => {
     })
 
     test('Works as intended for Two Even numbers', () => {
-        rule.setMode(1)
+        rule.setMode(2)
         let count = 0
         let compare = 0
         for(let a = 1; a <= 5; a++) {
@@ -67,7 +67,7 @@ describe("Rule 16", () => {
     })
 
     test('Works as intended for Three Even numbers', () => {
-        rule.setMode(1)
+        rule.setMode(3)
         let count = 0
         let compare = 0
         for(let a = 1; a <= 5; a++) {
