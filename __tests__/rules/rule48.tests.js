@@ -13,7 +13,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,1) === 0) compare++
+                    if(county(a,b,c,1) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -29,7 +29,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,1) === 0) compare++
+                    if(county(a,b,c,1) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -45,7 +45,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,1) === 2) compare++
+                    if(county(a,b,c,1) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -61,7 +61,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 0) compare++
+                    if(county(a,b,c,4) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -77,7 +77,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 1) compare++
+                    if(county(a,b,c,4) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -93,7 +93,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 2) compare++
+                    if(county(a,b,c,4) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -109,7 +109,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 0) compare++
+                    if(county(a,b,c,4) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -125,7 +125,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 1) compare++
+                    if(county(a,b,c,4) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -141,7 +141,7 @@ describe("Rule 48", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 2) compare++
+                    if(county(a,b,c,4) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }

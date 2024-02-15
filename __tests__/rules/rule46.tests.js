@@ -4,7 +4,7 @@ const rule = rules[46]
 
 // Zero 3's : One 3's : Two 3's : Zero 4's : One 4's : Two 4's
 
-const count = (a, b, c, v) => {
+const county = (a, b, c, v) => {
     total = 0
     if (a === v) total++
     if (b === v) total++
@@ -21,7 +21,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,3) === 0) compare++
+                    if(county(a,b,c,3) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -37,7 +37,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,3) === 0) compare++
+                    if(county(a,b,c,3) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -53,7 +53,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,3) === 2) compare++
+                    if(county(a,b,c,3) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -69,7 +69,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 0) compare++
+                    if(county(a,b,c,4) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -85,7 +85,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 1) compare++
+                    if(county(a,b,c,4) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -101,7 +101,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a,b,c,4) === 2) compare++
+                    if(county(a,b,c,4) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }
