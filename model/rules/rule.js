@@ -297,16 +297,16 @@ const rule19 = new Rule("A triple number : A double number : No repeting numbers
 
 const rule20 = new Rule("A pair exists : No pair exists", 2, (a, b, c, m) => {
     if (m === 0) {
-        return !((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b))
+        return ((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b))
     }
     else {
-        return (a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b)
+        return !((a === b && a !== c) || (a === c && a !== b) || (b === c && a !== b))
     }
 })
 
 const rule21 = new Rule("Ascending order : Descending order : No order", 3, (a, b, c, m) => {
-    let ascending = a > b > c
-    let descending = a > b > c
+    let ascending = a < b && b < c
+    let descending = a > b && b > c
     if (m === 0) {
         return ascending
     }
@@ -314,7 +314,7 @@ const rule21 = new Rule("Ascending order : Descending order : No order", 3, (a, 
         return descending
     }
     else {
-        return !ascending && !descending // CLARIFIY IF THIS IS CORRECT
+        return !ascending && !descending // TODO: CLARIFIY IF THIS IS CORRECT
     }
 })
 
@@ -672,8 +672,8 @@ const rule44 = new Rule("B < A : B = A : B > A : B < C : B = C : B > C", 6, (a, 
 const rule45 = new Rule("Zero 1's : One 1's : Two 1's : Zero 3's : One 3's : Two 3's", 6, (a, b, c, m) => {
     let ones = 0
     if (a === 1) ones++
-    if (a === 1) ones++
-    if (a === 1) ones++
+    if (b === 1) ones++
+    if (c === 1) ones++
 
     let threes = 0
     if (a === 3) threes++
@@ -703,8 +703,8 @@ const rule45 = new Rule("Zero 1's : One 1's : Two 1's : Zero 3's : One 3's : Two
 const rule46 = new Rule("Zero 3's : One 3's : Two 3's : Zero 4's : One 4's : Two 4's", 6, (a, b, c, m) => {
     let threes = 0
     if (a === 3) threes++
-    if (a === 3) threes++
-    if (a === 3) threes++
+    if (b === 3) threes++
+    if (c === 3) threes++
 
     let fours = 0
     if (a === 4) fours++
@@ -734,8 +734,8 @@ const rule46 = new Rule("Zero 3's : One 3's : Two 3's : Zero 4's : One 4's : Two
 const rule47 = new Rule("Zero 1's : One 1's : Two 1's : Zero 4's : One 4's : Two 4's", 6, (a, b, c, m) => {
     let ones = 0
     if (a === 1) ones++
-    if (a === 1) ones++
-    if (a === 1) ones++
+    if (b === 1) ones++
+    if (c === 1) ones++
 
     let fours = 0
     if (a === 4) fours++

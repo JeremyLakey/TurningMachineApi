@@ -37,7 +37,7 @@ describe("Rule 46", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(county(a,b,c,3) === 0) compare++
+                    if(county(a,b,c,3) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }

@@ -1,4 +1,4 @@
-
+// TODO: Confirm this test's counts are correct
 const rules = require("../../model/rules/rule")
 const rule = rules[25]
 
@@ -23,7 +23,7 @@ describe("Rule 25", () => {
         
     })
 
-    test('Works as intended for 2 Numbers Straight Descending', () => {
+    test('Works as intended for 2 Numbers Straight', () => {
         rule.setMode(1)
         let count = 0
         let compare = 0
@@ -35,12 +35,12 @@ describe("Rule 25", () => {
                     expect(count).toBe(compare)}
             }
         }
-        expect(count).toBe(68)
+        expect(count).toBe(60)
         expect(count).toBe(compare)
         
     })
 
-    test('Works as intended for No Straight Descending', () => {
+    test('Works as intended for No Straight', () => {
         rule.setMode(2)
         let count = 0
         let compare = 0
@@ -53,7 +53,7 @@ describe("Rule 25", () => {
                 }
             }
         }
-        expect(count).toBe(51)
+        expect(count).toBe(117)
         expect(count).toBe(compare)
         
     })

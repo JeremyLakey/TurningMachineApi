@@ -6,7 +6,7 @@ const rule = rules[26]
 
 describe("Rule 26", () => {
     test('Works as intended for A < 3', () => {
-        rule.setMode(1)
+        rule.setMode(0)
         let count = 0
         let compare = 0
         for(let a = 1; a <= 5; a++) {

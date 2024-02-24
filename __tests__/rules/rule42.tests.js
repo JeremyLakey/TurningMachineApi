@@ -18,7 +18,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 
     test('Works as intended for A is the Largest', () => {
@@ -34,7 +34,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 
     test('Works as intended for B is the Smallest', () => {
@@ -50,7 +50,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 
     test('Works as intended for B is the Largest', () => {
@@ -66,7 +66,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 
     test('Works as intended for C is the Smallest', () => {
@@ -82,7 +82,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 
     test('Works as intended for C is the Largest', () => {
@@ -98,7 +98,7 @@ describe("Rule 42", () => {
                 }
             }
         }
-        expect(count).toBe(39)
+        expect(count).toBe(30)
     })
 } 
 )

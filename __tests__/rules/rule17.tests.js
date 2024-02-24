@@ -29,7 +29,7 @@ describe("Rule 17", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if((a + b + c) % 2 === 0) compare++
+                    if((a + b + c) % 2 === 1) compare++
                     expect(count).toBe(compare)
                 }
             }

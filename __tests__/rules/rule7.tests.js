@@ -3,7 +3,7 @@ const rules = require("../../model/rules/rule")
 const rule = rules[7]
 
 // "Zero 1's : One 1's : Two 1's : Three 1's"
-const count = (a,b,c) => {
+const county = (a,b,c) => {
     count = 0
     if (a === 1) count++
     if (b === 1) count++
@@ -20,7 +20,7 @@ describe("Rule 7", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a, b, c) === 0) compare++
+                    if(county(a, b, c) === 0) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -37,7 +37,7 @@ describe("Rule 7", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a, b, c) === 1) compare++
+                    if(county(a, b, c) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -55,7 +55,7 @@ describe("Rule 7", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a, b, c) === 2) compare++
+                    if(county(a, b, c) === 2) compare++
                     expect(count).toBe(compare)
                 }
             }
@@ -73,7 +73,7 @@ describe("Rule 7", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(count(a, b, c) === 3) compare++
+                    if(county(a, b, c) === 3) compare++
                     expect(count).toBe(compare)
                 }
             }

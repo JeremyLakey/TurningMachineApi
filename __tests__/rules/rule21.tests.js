@@ -49,7 +49,7 @@ describe("Rule 21", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(!(a < b && b < c) && !(a < b && b < c)) compare++
+                    if(!(a > b && b > c) && !(a < b && b < c)) compare++
                     expect(count).toBe(compare)
                 }
             }

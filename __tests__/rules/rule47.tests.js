@@ -37,7 +37,7 @@ describe("Rule 47", () => {
             for(let b = 1; b <= 5; b++) {
                 for(let c = 1; c <=5 ; c++) {
                     if(rule.checkRule(a,b,c)) count++
-                    if(county(a,b,c,1) === 0) compare++
+                    if(county(a,b,c,1) === 1) compare++
                     expect(count).toBe(compare)
                 }
             }

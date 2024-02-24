@@ -41,7 +41,7 @@ describe("Rule 19", () => {
     })
 
     test('Works as intended for No repeting Number', () => {
-        rule.setMode(1)
+        rule.setMode(2)
         let count = 0
         let compare = 0
         for(let a = 1; a <= 5; a++) {
