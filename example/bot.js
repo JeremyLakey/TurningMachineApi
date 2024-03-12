@@ -1,27 +1,28 @@
 const rules = require("./rules.js")
 const config = require("./config.json")
 const axios = require('axios')
+const api = require("./api.js")
 
-
-
-
-if (config.create) {
-    // create
-
-    axios.post(config.url + "/user",{
-          name: config.username,
-          password: config.password,
-        }).then((response) => {
-            console.log(response.data)
-        })
-}
-else {
-    // login
+const bot = async () => {
+    if (config.create) {
+        // create
+        await api.createAccount()
+    }
     
-    axios.post(config.url + "/user/login",{
-        name: config.username,
-        password: config.password,
-      }).then((response) => {
-          console.log(response.data)
-      })
+    await api.doLogin()
+    await api.startGame()
 }
+
+
+bot()
+
+
+
+
+
+
+
+
+
+
+

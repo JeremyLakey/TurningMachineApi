@@ -1,6 +1,6 @@
 {
     "username":"example",
     "password":"example",
-    "url":"https://localhost:3005",
-    "create":true
+    "url":"http://localhost:3005",
+    "create":false
 }
