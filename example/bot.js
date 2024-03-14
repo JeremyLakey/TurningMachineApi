@@ -10,7 +10,19 @@ const bot = async () => {
     }
     
     await api.doLogin()
-    await api.startGame()
+    let gameData = await api.startGame()
+
+    console.log(gameData)
+
+
+
+    await api.guess(1,1,1,1)
+    
+    await api.guess(1,1,1,2)
+
+    await api.guess(1,1,1,3)
+    
+    await api.guess(1,1,1,0)
 }
 
 

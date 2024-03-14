@@ -12,6 +12,7 @@ const rules = require('../model/rules/rule')
 
 playRoutes.post("/start", [tokenUtil.validateAccessToken, bodyParser.json()], async (req, res) => {
     let numRules = Math.floor(Math.random() * 3 + 4)
+    console.log("Starting game")
     console.log(req.body)
     if (req.body && req.body.n && req.body.n >=4 && req.body.n <=6) {
         numRules = req.body.n
@@ -65,8 +66,12 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], as
         return
     }
 
-    if (!req.body.r || req.body.r < 0 || req.body.r >= game.rules.length) {
-        
+    if (typeof req.body.r === 'undefined' || req.body.r < 0 || req.body.r >= game.rules.length) {
+        console.log(game.rules.length)
+        console.log(req.body)
+        console.log(!req.body.r)
+        console.log(req.body.r < 0)
+        console.log(req.body.r >= game.rules.length)
         res.status(400)
         res.send({err: "Invalid Guess"})
         return
@@ -83,7 +88,7 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], as
 
     // returns pass or not
 
-    res.status(418)
+    res.status(200)
     res.send({result:false})
 })
 
@@ -129,7 +134,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, bodyParser.json()], as
     // failureS
     await StatsModel.updateOne({user:req.user.id}, {$inc: {totalGuesses: 10}})
 
-    res.status(418)
+    res.status(200)
     res.send({result:false})
 })
 
