@@ -1,5 +1,5 @@
-const rules = require("./rules.js")
-const config = require("./config.json")
+const rules = require("../rules.js")
+const config = require("../config.json")
 const axios = require('axios')
 
 
@@ -76,10 +76,34 @@ const guess = async (a, b, c, r) => {
     }
 }
 
+const solve = async (a, b, c) => {
+    const body = {
+        'a':a,
+        'b':b,
+        'c':c,
+    }
+    const headers = {
+        'Content-Type':'application/json', 
+        'Authorization': 'Bearer ' + token
+    }
+    try {
+        
+        const result = await axios.post(config.url + "/play/solve", body, {
+            headers: headers
+        })
+        return result.data.result
+    }
+    catch (err) {
+        console.log("Solve error for " + r + " " + err)
+        return false
+    }
+}
+
 
 module.exports = {
     createAccount,
     doLogin,
     startGame,
     guess,
+    solve
 }

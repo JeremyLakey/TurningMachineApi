@@ -39,7 +39,10 @@ const increamentRules = (rules, modes, index) => {
 }
 
 const testModes = (rules, modes) => {
-    foundSolution = false
+    let foundSolution = false
+    let a2 = 1
+    let b2 = 1
+    let c2 = 1
     for (let a = 1; a <= 5; a++) {
         for (let b = 1; b <= 5; b++) {
             for (let c = 1; c <= 5; c++) {
@@ -49,11 +52,16 @@ const testModes = (rules, modes) => {
                     }
                     else {
                         foundSolution = true
+                        a2 = a
+                        b2 = b
+                        c2 = c
                     }
                 }
             }
         }
     }
+
+    if (foundSolution) console.log("Answer: a:" + a2 + " b:" + b2 + " c:" + c2)
     return foundSolution
 }
 

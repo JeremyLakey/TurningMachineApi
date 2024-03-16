@@ -80,7 +80,9 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], as
     await StatsModel.updateOne({user:req.user.id}, {$inc: {totalGuesses: 1}})
 
     // verify on verifier
-    if (rules[req.body.r].rule(req.body.a, req.body.b, req.body.c, game.modes[req.body.r])) {
+    rules[req.body.r].setMode(game.modes[req.body.r])
+    if (rules[req.body.r].checkRule(req.body.a, req.body.b, req.body.c)) {
+        console.log("Correct " + req.body.a + " " + req.body.b + " " + req.body.c)
         res.status(200)
         res.send({result:true})
         return
@@ -110,7 +112,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, bodyParser.json()], as
     
     let passedAll = true
     for (let i = 0 ; i < rules; i++) {
-        if (!rules[i].rule(req.body.a, req.body.b, req.body.c, game.modes[i])) {
+        if (!rules[req.body.r].checkRule(req.body.a, req.body.b, req.body.c)) {
             passedAll = false;
             break
         }
