@@ -4,22 +4,32 @@ const axios = require('axios')
 const api = require("./api/api.js")
 
 const runGames = async () => {
-    for (let i = 0; i < 10; i++) {
+    if (config.create) {
+        // create account first
+        await api.createAccount()
+    }
+
+    await api.doLogin()
+
+    if (config.reset) {
+        // reset first
+        console.log(await api.resetScore())
+    }
+
+    for (let i = 0; i < config.numGames; i++) {
         await bot()
     }
 }
 
 const bot = async () => {
-    if (config.create) {
-        // create
-        await api.createAccount()
-    }
     
-    await api.doLogin()
     let numRules = Math.floor(Math.random() * 3 + 4)
-    let gameData = await api.startGame(numRules)
+    let ruleNums = await api.startGame(numRules)
 
-    console.log(gameData)
+    for (let i = 0; i < ruleNums.length; i++) {
+        console.log(rules[ruleNums[i]].description)
+    }
+
     let result = await guessAllNumbers(numRules)
 
     console.log(result)
@@ -29,24 +39,26 @@ const bot = async () => {
 }
 
 const guessAllNumbers = async (n) => {
-    let a, b, c
-    for (a = 1; a <= 5; a++) {
-        for (b = 1; b <= 5; b++) {
-            for (c = 1; c <= 5; c++) {
-                console.log(a, b, c)
+    for (let a = 1; a <= 5; a++) {
+        for (let b = 1; b <= 5; b++) {
+            for (let c = 1; c <= 5; c++) {
                 if (await guessAllRules(a, b, c, n)) {
                     return [a, b, c]
                 }
             }
         }
     }
+    console.log("Oof")
     return [1, 1, 1]
 }
 
 const guessAllRules = async (a, b, c, n) => {
     for (let i = 0; i < n; i++) {
         let result = await api.guess(a,b,c,i)
-        if (!result) return false
+        if (!result) {
+            return false
+        }
+        
     }
     return true
 }

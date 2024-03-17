@@ -16,7 +16,20 @@ const createAccount = async () => {
     } catch (err) {
         console.log(err)
     }
-    
+}
+
+// TODO
+const deleteAccount = async () => {
+    const headers = {
+        'Authorization': 'Bearer ' + token
+    }
+    try {
+        await axios.delete(config.url + "/user", {
+            headers: headers
+          })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const doLogin = async () => {
@@ -30,7 +43,6 @@ const doLogin = async () => {
     } catch (err) {
         console.log(err)
     }
-    
 }
 
 
@@ -64,7 +76,6 @@ const guess = async (a, b, c, r) => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        
         const result = await axios.post(config.url + "/play/guess", body, {
             headers: headers
         })
@@ -87,23 +98,74 @@ const solve = async (a, b, c) => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        
         const result = await axios.post(config.url + "/play/solve", body, {
             headers: headers
         })
         return result.data.result
     }
     catch (err) {
-        console.log("Solve error for " + r + " " + err)
+        console.log("Solve error for " + err)
+        return false
+    }
+}
+
+// TODO
+const getLeaderBoard = async (username) => {
+    try {
+        const result = await axios.get(config.url)
+        return result.data
+    }
+    catch (err) {
+        console.log("Reset Score error for " + err)
+        return false
+    }
+}
+
+// TODO
+const getScore = async (username) => {
+    const headers = {
+        'Content-Type':'application/json', 
+        'Authorization': 'Bearer ' + token
+    }
+    try {
+        const result = await axios.get(config.url + "/stats/user", {
+            name: username
+        })
+        return result.data
+    }
+    catch (err) {
+        console.log("Reset Score error for " + err)
+        return false
+    }
+}
+
+const resetScore = async () => {
+    const headers = {
+        'Content-Type':'application/json', 
+        'Authorization': 'Bearer ' + token
+    }
+    try {
+        const result = await axios.delete(config.url + "/stats/reset", {
+            headers: headers
+        })
+        return result.data
+    }
+    catch (err) {
+        console.log("Reset Score error for " + err)
         return false
     }
 }
 
 
+
 module.exports = {
     createAccount,
+    deleteAccount,
     doLogin,
     startGame,
     guess,
-    solve
+    solve,
+    resetScore,
+    getScore,
+    getLeaderBoard,
 }

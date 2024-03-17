@@ -47,7 +47,7 @@ playRoutes.post("/start", [tokenUtil.validateAccessToken, bodyParser.json()], as
 
 
 const validateGuess = (body) => {
-    return body && body.a && body.a >= 1 && body.a <= 5 && body.b && body.b >= 1 && body.b <= 5 && body.c && body.c >= 1 && body.c <= 5
+    return body && typeof body.a !== 'undefined' && body.a >= 1 && body.a <= 5 && typeof body.b !== 'undefined' && body.b >= 1 && body.b <= 5 && typeof body.c !== 'undefined' && body.c >= 1 && body.c <= 5
 }
 
 playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], async(req, res) => {
@@ -80,16 +80,16 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], as
     await StatsModel.updateOne({user:req.user.id}, {$inc: {totalGuesses: 1}})
 
     // verify on verifier
-    rules[req.body.r].setMode(game.modes[req.body.r])
-    if (rules[req.body.r].checkRule(req.body.a, req.body.b, req.body.c)) {
-        console.log("Correct " + req.body.a + " " + req.body.b + " " + req.body.c)
+    if (rules[game.rules[req.body.r]].rule(req.body.a, req.body.b, req.body.c, game.modes[req.body.r])) {
+        //console.log("Correct " + req.body.a + " " + req.body.b + " " + req.body.c)
         res.status(200)
         res.send({result:true})
         return
     }
 
     // returns pass or not
-
+    
+    //console.log("Wrong " + req.body.a + " " + req.body.b + " " + req.body.c)
     res.status(200)
     res.send({result:false})
 })
@@ -111,14 +111,15 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, bodyParser.json()], as
     }
     
     let passedAll = true
-    for (let i = 0 ; i < rules; i++) {
-        if (!rules[req.body.r].checkRule(req.body.a, req.body.b, req.body.c)) {
+    for (let i = 0 ; i < game.rules.length; i++) {
+        if (!rules[game.rules[i]].rule(req.body.a, req.body.b, req.body.c, game.modes[i])) {
             passedAll = false;
             break
         }
     }
 
     if (passedAll) {
+        console.log("Passed game!")
         await GameModel.deleteOne({user:req.user.id})
         let stats = await StatsModel.findOne({user:req.user.id})
         stats.solves += 1
@@ -131,6 +132,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, bodyParser.json()], as
         res.send({result:true})
         return
     }
+    console.log("Failed game!")
     
 
     // failureS

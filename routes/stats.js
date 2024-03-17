@@ -44,8 +44,10 @@ statsRoutes.get("/user", bodyParser.json, async (req, res) => {
 
 })
 
-statsRoutes.delete("/reset", [tokenUtil.validateAccessToken, bodyParser.json], async (req, res) => {
-    let result = await StatsModel.findOneAndUpdate({name:req.user.name}, {score:0, solves:0, totalGuesses: 0})
+statsRoutes.delete("/reset", tokenUtil.validateAccessToken, async (req, res) => {
+    console.log(req.user)
+    console.log("Reseting score: " + req.user.username)
+    let result = await StatsModel.findOneAndUpdate({name:req.user.username}, {score:0, solves:0, totalGuesses: 0})
     res.send(result)
 })
 

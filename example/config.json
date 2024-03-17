@@ -2,5 +2,7 @@
     "username":"example",
     "password":"example",
     "url":"http://0.0.0.0:3005",
-    "create":false
+    "numGames": 3,
+    "create":false,
+    "reset":true
 }
