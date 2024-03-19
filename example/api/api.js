@@ -2,7 +2,6 @@ const rules = require("../rules.js")
 const config = require("../config.json")
 const axios = require('axios')
 
-
 var token;
 
 const createAccount = async () => {
@@ -14,7 +13,7 @@ const createAccount = async () => {
               console.log(response.data)
           })
     } catch (err) {
-        console.log(err)
+        console.log('Create Account error ' + err)
     }
 }
 
@@ -28,7 +27,7 @@ const deleteAccount = async () => {
             headers: headers
           })
     } catch (err) {
-        console.log(err)
+        console.log('Delete Account error: ' + err)
     }
 }
 
@@ -41,7 +40,7 @@ const doLogin = async () => {
                 token = response.data
             })
     } catch (err) {
-        console.log(err)
+        console.log('Login error: ' + err)
     }
 }
 
@@ -82,7 +81,7 @@ const guess = async (a, b, c, r) => {
         return result.data.result
     }
     catch (err) {
-        console.log("guess error for " + r + " " + err)
+        console.log("guess error: rule:" + r + " error:" + err)
         return false
     }
 }
@@ -104,37 +103,52 @@ const solve = async (a, b, c) => {
         return result.data.result
     }
     catch (err) {
-        console.log("Solve error for " + err)
+        console.log("Solve error : " + err)
         return false
     }
 }
 
-// TODO
-const getLeaderBoard = async (username) => {
+const getLeaderBoard = async (num = 10, skip = 0) => {
     try {
-        const result = await axios.get(config.url)
+        const options = {
+            method: "GET",
+            url: config.url + "/stats",
+            headers: {
+                'content-type': 'application/json',
+            },
+            data: {
+                    skip: skip,
+                    limit: num,
+                },
+        }
+
+        const result = await axios.request(options)
         return result.data
     }
     catch (err) {
-        console.log("Reset Score error for " + err)
+        console.log("Get Leader Board error: " + err)
         return false
     }
 }
 
-// TODO
 const getScore = async (username) => {
-    const headers = {
-        'Content-Type':'application/json', 
-        'Authorization': 'Bearer ' + token
-    }
     try {
-        const result = await axios.get(config.url + "/stats/user", {
-            name: username
-        })
+        const options = {
+            method: "GET",
+            url: config.url + "/stats/user",
+            headers: {
+                'content-type': 'application/json',
+            },
+            data: {
+                    name: username
+                },
+        }
+
+        const result = await axios.request(options)
         return result.data
     }
     catch (err) {
-        console.log("Reset Score error for " + err)
+        console.log("Get Leader Board error: " + err)
         return false
     }
 }
@@ -151,7 +165,7 @@ const resetScore = async () => {
         return result.data
     }
     catch (err) {
-        console.log("Reset Score error for " + err)
+        console.log("Reset Score error: " + err)
         return false
     }
 }

@@ -1,13 +1,13 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const StatsModel = require('../model/schema/statsSchema')
 const tokenUtil = require('../utils/authToken')
 
 const statsRoutes = express.Router()
 
-statsRoutes.get("/", bodyParser.json, async (req, res) => {
-    let skip = 0;
-    let limit = 10;
+statsRoutes.get("/", express.json(), async (req, res) => {
+    console.log("Getting leaderboard")
+    let skip = 0
+    let limit = 10
     if (req.body) {
         if (req.body.skip && req.body.skip > 0) {
             skip = req.body.skip
@@ -16,30 +16,40 @@ statsRoutes.get("/", bodyParser.json, async (req, res) => {
             limit = req.body.limit
         }
     }
-    const results = StatsModel.find().limit(limit).sort({ score: 'desc',}).skip(skip)
+    try {
 
-    console.log(results)
+        const results = await StatsModel.find().limit(limit).sort({ score: 'desc',}).skip(skip)
 
-    res.status(200)
-    res.send([{numGames: 0, totalGuesses: 0, averageGuesses: 0}])
+        res.status(200)
+        res.send(results)
+    } catch (err) {
+        res.status(500)
+        res.send({err:"Error getting leaderboard"})
+        console.log("Leaderboard critial error:" + err)
+    }
 })
 
 // TODO: Get's user score
-statsRoutes.get("/user", bodyParser.json, async (req, res) => {
+statsRoutes.get("/user", express.json(), async (req, res) => {
 
     if (!req.body || !req.body.name) { 
         res.status(400)
         res.send({err:"Need name"})
     }
 
-    const result = await StatsModel.findOne({name:req.body.name})
-    if (result) {  
-        res.status(200)
-        res.send(result)
-    }
-    else {
+    try {
+        const result = await StatsModel.findOne({name:req.body.name})
+        if (result) {  
+            res.status(200)
+            res.send(result)
+        }
+        else {
+            res.status(404)
+            res.send({err:"Could not find user"})
+        }
+    } catch (err) {
         res.status(404)
-        res.sent({err:"Could not find user"})
+        res.send({err:"Could not find user"})
     }
 
 })

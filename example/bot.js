@@ -11,6 +11,9 @@ const runGames = async () => {
 
     await api.doLogin()
 
+    
+    console.log(await api.getLeaderBoard())
+
     if (config.reset) {
         // reset first
         console.log(await api.resetScore())
@@ -19,6 +22,8 @@ const runGames = async () => {
     for (let i = 0; i < config.numGames; i++) {
         await bot()
     }
+    
+    console.log(await api.getScore(config.username))
 }
 
 const bot = async () => {
@@ -26,8 +31,9 @@ const bot = async () => {
     let numRules = Math.floor(Math.random() * 3 + 4)
     let ruleNums = await api.startGame(numRules)
 
+
     for (let i = 0; i < ruleNums.length; i++) {
-        console.log(rules[ruleNums[i]].description)
+        console.log(rules[ruleNums[i]].description + '\n')
     }
 
     let result = await guessAllNumbers(numRules)
