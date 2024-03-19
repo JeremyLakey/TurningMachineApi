@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const UserModel = require('../model/schema/userSchema')
 const StatsModel = require('../model/schema/statsSchema')
 const GameModel = require('../model/schema/gameSchema')
@@ -8,7 +7,7 @@ const salty = require('../utils/salty')
 const tokenUtil = require('../utils/authToken')
 
 // create user
-userRoutes.post('/', bodyParser.json(), async (req, res) => {
+userRoutes.post('/', express.json(), async (req, res) => {
     console.log(req.body)
     if(req.body && req.body.name && req.body.password && req) {
         try {  
@@ -31,7 +30,7 @@ userRoutes.post('/', bodyParser.json(), async (req, res) => {
 })
 
 // login user
-userRoutes.post('/login', bodyParser.json(), async (req, res) => {
+userRoutes.post('/login', express.json(), async (req, res) => {
     if(req.body && req.body.name) {
         const name = req.body.name
         let user = await UserModel.findOne({name:name})

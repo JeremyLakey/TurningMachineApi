@@ -6,11 +6,10 @@ const GameModel = require('../model/schema/gameSchema')
 
 const gameGenerater = require('../model/game')
 const tokenUtil = require('../utils/authToken')
-const bodyParser = require('body-parser')
 
 const rules = require('../model/rules/rule')
 
-playRoutes.post("/start", [tokenUtil.validateAccessToken, bodyParser.json()], async (req, res) => {
+playRoutes.post("/start", [tokenUtil.validateAccessToken, express.json()], async (req, res) => {
     let numRules = Math.floor(Math.random() * 3 + 4)
     console.log("Starting game")
     console.log(req.body)
@@ -50,7 +49,7 @@ const validateGuess = (body) => {
     return body && typeof body.a !== 'undefined' && body.a >= 1 && body.a <= 5 && typeof body.b !== 'undefined' && body.b >= 1 && body.b <= 5 && typeof body.c !== 'undefined' && body.c >= 1 && body.c <= 5
 }
 
-playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], async(req, res) => {
+playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async(req, res) => {
     // takes number and verifier
     if (!validateGuess(req.body)) {
         res.status(400)
@@ -95,7 +94,7 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, bodyParser.json()], as
 })
 
 // if wrong, costs guesses equal to number of verifiers
-playRoutes.post("/solve", [tokenUtil.validateAccessToken, bodyParser.json()], async(req, res) => {
+playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async(req, res) => {
     if (!validateGuess(req.body)) {
         res.status(400)
         res.send({err: "Invalid number"})
