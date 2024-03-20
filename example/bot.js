@@ -24,6 +24,11 @@ const runGames = async () => {
     }
     
     console.log(await api.getScore(config.username))
+
+    if (config.delete) {
+        // 
+        await api.deleteAccount()
+    }
 }
 
 const bot = async () => {
@@ -31,7 +36,7 @@ const bot = async () => {
     let numRules = Math.floor(Math.random() * 3 + 4)
     let ruleNums = await api.startGame(numRules)
 
-
+    console.log(ruleNums)
     for (let i = 0; i < ruleNums.length; i++) {
         console.log(rules[ruleNums[i]].description + '\n')
     }

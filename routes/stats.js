@@ -57,8 +57,14 @@ statsRoutes.get("/user", express.json(), async (req, res) => {
 statsRoutes.delete("/reset", tokenUtil.validateAccessToken, async (req, res) => {
     console.log(req.user)
     console.log("Reseting score: " + req.user.username)
-    let result = await StatsModel.findOneAndUpdate({name:req.user.username}, {score:0, solves:0, totalGuesses: 0})
-    res.send(result)
+    try {
+        let result = await StatsModel.findOneAndUpdate({name:req.user.username}, {score:0, solves:0, totalGuesses: 0})
+        res.send(result)
+    } catch (err) {
+        res.status(404)
+        res.send({err:"Could not reset score: " + err})
+    }
+        
 })
 
 module.exports = statsRoutes

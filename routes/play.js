@@ -95,50 +95,57 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async
 
 // if wrong, costs guesses equal to number of verifiers
 playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async(req, res) => {
-    if (!validateGuess(req.body)) {
-        res.status(400)
-        res.send({err: "Invalid number"})
-        return
-    }
-
-    const game = await GameModel.findOne({user: req.user.id});
-
-    if (!game) {
-        res.status(400)
-        res.send({err: "Start Game First"})
-        return
-    }
     
-    let passedAll = true
-    for (let i = 0 ; i < game.rules.length; i++) {
-        if (!rules[game.rules[i]].rule(req.body.a, req.body.b, req.body.c, game.modes[i])) {
-            passedAll = false;
-            break
+    try {
+        if (!validateGuess(req.body)) {
+            res.status(400)
+            res.send({err: "Invalid number"})
+            return
         }
-    }
 
-    if (passedAll) {
-        console.log("Passed game!")
-        await GameModel.deleteOne({user:req.user.id})
-        let stats = await StatsModel.findOne({user:req.user.id})
-        stats.solves += 1
-        let score = stats.solves / stats.totalGuesses
-        if (stats.solves < 100) {
-            score = 0
+        const game = await GameModel.findOne({user: req.user.id});
+
+        if (!game) {
+            res.status(400)
+            res.send({err: "Start Game First"})
+            return
         }
-        await StatsModel.updateOne({user:req.user.id}, {score:score, solves: stats.solves})
+        
+        let passedAll = true
+        for (let i = 0 ; i < game.rules.length; i++) {
+            if (!rules[game.rules[i]].rule(req.body.a, req.body.b, req.body.c, game.modes[i])) {
+                passedAll = false;
+                break
+            }
+        }
+
+        if (passedAll) {
+            console.log("Passed solve!")
+            await GameModel.deleteOne({user:req.user.id})
+            let stats = await StatsModel.findOne({user:req.user.id})
+            stats.solves += 1
+            let score = stats.solves / stats.totalGuesses
+            if (stats.solves < 100) {
+                score = 0
+            }
+            await StatsModel.updateOne({user:req.user.id}, {score:score, solves: stats.solves})
+            res.status(200)
+            res.send({result:true})
+            return
+        }
+        console.log("Failed solve!")
+    
+
+        // failure
+        await StatsModel.updateOne({user:req.user.id}, {$inc: {totalGuesses: 10}})
+    
         res.status(200)
-        res.send({result:true})
-        return
+        res.send({result:false})
+    } catch (err) {
+        console.log("Critial error solving game: " + err)
+        res.status(500)
+        res.send({err:"Did not finish checking answer"})
     }
-    console.log("Failed game!")
-    
-
-    // failureS
-    await StatsModel.updateOne({user:req.user.id}, {$inc: {totalGuesses: 10}})
-
-    res.status(200)
-    res.send({result:false})
 })
 
 module.exports = playRoutes

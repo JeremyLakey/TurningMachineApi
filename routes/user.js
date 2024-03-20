@@ -19,7 +19,7 @@ userRoutes.post('/', express.json(), async (req, res) => {
         catch (err) {
             console.log(err)
             res.status(409)
-            res.send({err:"Could not create user"})
+            res.send({err:"Could not create user: " + err})
         }
     }
     else {
@@ -56,18 +56,26 @@ userRoutes.post('/login', express.json(), async (req, res) => {
 
 // delete user
 userRoutes.delete('/', tokenUtil.validateAccessToken, async (req, res) => {
-    let result = await UserModel.deleteOne(req.user.name)
-    if (result.deletedCount <= 0) {
-        res.status(404)
-        res.send({err:"Nothing was deleted"})
-        return
-    }
-    await StatsModel.deleteOne(req.user.id)
-    
-    await GameModel.deleteOne(req.user.id)
 
-    res.status(200)
-    res.send(req.user)
+    try {
+        
+        let result = await UserModel.deleteOne({name: req.user.username})
+        if (result.deletedCount <= 0) {
+            res.status(404)
+            res.send({err:"Nothing was deleted"})
+            return
+        }
+        await StatsModel.deleteOne({user: req.user.id})
+        
+        await GameModel.deleteOne({user: req.user.id})
+    
+        res.status(200)
+        res.send(req.user)
+    } catch (err) {
+        console.log("Error deleting user: " + err)
+        res.status(500)
+        res.send({err:"Could not delete user"})
+    }
 })
 
 module.exports = userRoutes
