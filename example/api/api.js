@@ -1,14 +1,34 @@
-const rules = require("../rules.js")
-const config = require("../config.json")
+const rules = require("./rules.js")
 const axios = require('axios')
 
 var token;
+var baseUrl;
 
-const createAccount = async () => {
+const setBaseUrl = (url) => {
+    baseUrl = url
+}
+
+const getRules = () => {
+    return rules
+}
+
+const checkRule = (a, b, c, r, m) => {
+    return rules[r].rule(a, b, c, m)
+}
+
+const getDescription = (r) => {
+    return rules[r].description
+}
+
+const getMaxMode = (r) => {
+    return rules[r].maxMode
+}
+
+const createAccount = async (username, password) => {
     try {
-        await axios.post(config.url + "/user",{
-            name: config.username,
-            password: config.password,
+        await axios.post(baseUrl + "/user",{
+            name: username,
+            password: password,
           }).then((response) => {
               console.log(response.data)
           })
@@ -17,13 +37,12 @@ const createAccount = async () => {
     }
 }
 
-// TODO
 const deleteAccount = async () => {
     const headers = {
         'Authorization': 'Bearer ' + token
     }
     try {
-        await axios.delete(config.url + "/user", {
+        await axios.delete(baseUrl + "/user", {
             headers: headers
           })
     } catch (err) {
@@ -31,11 +50,11 @@ const deleteAccount = async () => {
     }
 }
 
-const doLogin = async () => {
+const doLogin = async (username, password) => {
     try {
-        await axios.post(config.url + "/user/login",{
-            name: config.username,
-            password: config.password,
+        await axios.post(baseUrl + "/user/login",{
+            name: username,
+            password: password,
             }).then((response) => {
                 token = response.data
             })
@@ -54,7 +73,7 @@ const startGame = async (n=4) => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        result = await axios.post(config.url + "/play/start", body, {
+        result = await axios.post(baseUrl + "/play/start", body, {
             headers: headers
         })
         return result.data
@@ -75,7 +94,7 @@ const guess = async (a, b, c, r) => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        const result = await axios.post(config.url + "/play/guess", body, {
+        const result = await axios.post(baseUrl + "/play/guess", body, {
             headers: headers
         })
         return result.data.result
@@ -97,7 +116,7 @@ const solve = async (a, b, c) => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        const result = await axios.post(config.url + "/play/solve", body, {
+        const result = await axios.post(baseUrl + "/play/solve", body, {
             headers: headers
         })
         return result.data.result
@@ -112,7 +131,7 @@ const getLeaderBoard = async (num = 10, skip = 0) => {
     try {
         const options = {
             method: "GET",
-            url: config.url + "/stats",
+            url: baseUrl + "/stats",
             headers: {
                 'content-type': 'application/json',
             },
@@ -135,7 +154,7 @@ const getScore = async (username) => {
     try {
         const options = {
             method: "GET",
-            url: config.url + "/stats/user",
+            url: baseUrl + "/stats/user",
             headers: {
                 'content-type': 'application/json',
             },
@@ -159,7 +178,7 @@ const resetScore = async () => {
         'Authorization': 'Bearer ' + token
     }
     try {
-        const result = await axios.delete(config.url + "/stats/reset", {
+        const result = await axios.delete(baseUrl + "/stats/reset", {
             headers: headers
         })
         return result.data
@@ -171,8 +190,12 @@ const resetScore = async () => {
 }
 
 
-
 module.exports = {
+    setBaseUrl,
+    getRules,
+    checkRule,
+    getDescription,
+    getMaxMode,
     createAccount,
     deleteAccount,
     doLogin,
@@ -182,4 +205,5 @@ module.exports = {
     resetScore,
     getScore,
     getLeaderBoard,
+    
 }

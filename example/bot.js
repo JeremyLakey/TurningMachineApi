@@ -1,21 +1,20 @@
-const rules = require("./rules.js")
+const rules = require("./api/rules.js")
 const config = require("./config.json")
 const axios = require('axios')
 const api = require("./api/api.js")
 
 const runGames = async () => {
+    api.setBaseUrl(config.url)
     if (config.create) {
-        // create account first
-        await api.createAccount()
+        await api.createAccount(config.username, config.password)
     }
 
-    await api.doLogin()
+    await api.doLogin(config.username, config.password)
 
     
     console.log(await api.getLeaderBoard())
 
     if (config.reset) {
-        // reset first
         console.log(await api.resetScore())
     }
 
@@ -26,7 +25,6 @@ const runGames = async () => {
     console.log(await api.getScore(config.username))
 
     if (config.delete) {
-        // 
         await api.deleteAccount()
     }
 }
@@ -59,7 +57,6 @@ const guessAllNumbers = async (n) => {
             }
         }
     }
-    console.log("Oof")
     return [1, 1, 1]
 }
 
