@@ -4,6 +4,17 @@ const axios = require('axios')
 var token;
 var baseUrl;
 
+const maybeWarn = (needToken = false) => {
+    if (needToken && !token) {
+        console.log("Need to get token first")
+        throw new error("Need to get token")
+    }
+    if (!baseUrl) {
+        console.log("Set up base url first")
+        throw new error("Need to get token")
+    }
+}
+
 const setBaseUrl = (url) => {
     baseUrl = url
 }
@@ -25,6 +36,7 @@ const getMaxMode = (r) => {
 }
 
 const createAccount = async (username, password) => {
+    maybeWarn()
     try {
         await axios.post(baseUrl + "/user",{
             name: username,
@@ -38,6 +50,7 @@ const createAccount = async (username, password) => {
 }
 
 const deleteAccount = async () => {
+    maybeWarn(true)
     const headers = {
         'Authorization': 'Bearer ' + token
     }
@@ -51,6 +64,7 @@ const deleteAccount = async () => {
 }
 
 const doLogin = async (username, password) => {
+    maybeWarn()
     try {
         await axios.post(baseUrl + "/user/login",{
             name: username,
@@ -65,6 +79,7 @@ const doLogin = async (username, password) => {
 
 
 const startGame = async (n=4) => {
+    maybeWarn(true)
     const body = {
         'n':n
     }
@@ -83,6 +98,7 @@ const startGame = async (n=4) => {
 }
 
 const guess = async (a, b, c, r) => {
+    maybeWarn(true)
     const body = {
         'a':a,
         'b':b,
@@ -106,6 +122,7 @@ const guess = async (a, b, c, r) => {
 }
 
 const solve = async (a, b, c) => {
+    maybeWarn(true)
     const body = {
         'a':a,
         'b':b,
@@ -128,6 +145,7 @@ const solve = async (a, b, c) => {
 }
 
 const getLeaderBoard = async (num = 10, skip = 0) => {
+    maybeWarn()
     try {
         const options = {
             method: "GET",
@@ -151,6 +169,7 @@ const getLeaderBoard = async (num = 10, skip = 0) => {
 }
 
 const getScore = async (username) => {
+    maybeWarn()
     try {
         const options = {
             method: "GET",
@@ -173,6 +192,7 @@ const getScore = async (username) => {
 }
 
 const resetScore = async () => {
+    maybeWarn(true)
     const headers = {
         'Content-Type':'application/json', 
         'Authorization': 'Bearer ' + token
