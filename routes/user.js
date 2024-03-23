@@ -8,17 +8,17 @@ const tokenUtil = require('../utils/authToken')
 
 // create user
 userRoutes.post('/', express.json(), async (req, res) => {
-    console.log(req.body)
-    if(req.body && req.body.name && req.body.password && req) {
+    if(req.body && req.body.name && req.body.password) {
         try {  
             let user = await UserModel.create({name:req.body.name, password: await salty.saltPassword(req.body.password)})
             await StatsModel.create({user: user._id, name: user.name})
+            let token = tokenUtil.generateAccessToken(name, user._id)
             res.status(201)
-            res.send({message:"success"})
+            res.send(token)
         }
         catch (err) {
             console.log(err)
-            res.status(409)
+            res.status(403)
             res.send({err:"Could not create user: " + err})
         }
     }
@@ -42,7 +42,7 @@ userRoutes.post('/login', express.json(), async (req, res) => {
         }
         else {
             console.log(req.body)
-            res.status(403)
+            res.status(401)
             res.send({err:"Not Authorized"})
         }
     }
