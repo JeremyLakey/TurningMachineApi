@@ -70,7 +70,7 @@ userRoutes.delete('/', tokenUtil.validateAccessToken, async (req, res) => {
         await GameModel.deleteOne({user: req.user.id})
     
         res.status(200)
-        res.send(req.user)
+        res.send()
     } catch (err) {
         console.log("Error deleting user: " + err)
         res.status(500)

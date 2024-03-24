@@ -5,6 +5,7 @@ Each of these endpoints have a base url, depending on where the server is hosted
 
 Just replace "base-url" with the real url.
 
+
 # Authorization Token
 
 Creating an account and login both return a token that is required for most routes.
@@ -25,12 +26,14 @@ name            String          Required
 password        String          Required
 
 Response body
-token           String
+token           String          Only on success
+err             String          Only on error
 
 Error codes
 201             Created user
 401             Username already taken
 400             Bad request
+
 
 # Login to account
 
@@ -43,13 +46,13 @@ name            String          Required
 password        String          Required
 
 Response body
-token           String
+token           String          Only on success
+err             String          Only on error
 
 Result codes
 201             Login successfully
 401             Incorrect user name or password
 400             Bad request
-
 
 
 # Delete account
@@ -58,7 +61,14 @@ DELETE base-url/user
 
 Used to permanetly delete an account.
 
-Requires authorization token. This token identifies the user to be deleted
+Requires authorization token. (This token identifies the user to be deleted)
+
+No request body
+
+No response body on success
+
+Response body
+err             String          Only on error
 
 Result codes
 200             Deleted user successfully
@@ -66,17 +76,52 @@ Result codes
 404             Could not find user
 500             Internal server error
 
+
 # Start game
 
 POST base-url/play/start
+
+Used to trigger the start of the game
+
+Request body
+n               Int             Optional (used to set number of rules, defaults to 4)
+
+Response body
+(Just an array of rule id's on success)
+err             String          Only on error
+
+Result codes
+200             Successfully created game
+401             Bad token
+500             Internal server error
+
 
 # Making a guess
 
 POST base-url/play/guess
 
+Used to take a guess on a single rule. Uses token to identify user. Increases user's number of guesses by 1. 
+
+Request body
+a               Int             Required (Must be between 1 to 5 inclusive)
+b               Int             Required (Must be between 1 to 5 inclusive)
+c               Int             Required (Must be between 1 to 5 inclusive)
+r               Int             Required (Must be between 0 to n - 1 inclusive, where n is the number of rules. r is the index for the rule's id in the array returned by the start game)
+
+Response body
+result          Boolean         Wether if the guess was verified correct. 
+
+Result codes
+200             Valid guess format (Check result body to see if guess was correct)
+400             Invalid guess (Could be invalid parameter or the game hasn't started)
+401             Bad Token
+
+
 # Attempting to solve
 
 POST base-url/play/solve
+
+Used to submit a final answer. On correct, increases user's number of solves by 1. On incorrect, increases user's number of guesses by 10. 
 
 # Getting leaderboard
 
