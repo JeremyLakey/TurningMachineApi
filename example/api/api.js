@@ -58,8 +58,10 @@ const deleteAccount = async () => {
         await axios.delete(baseUrl + "/user", {
             headers: headers
           })
+        return true
     } catch (err) {
         console.log('Delete Account error: ' + err)
+        return false
     }
 }
 
