@@ -83,6 +83,8 @@ POST base-url/play/start
 
 Used to trigger the start of the game
 
+Requires authorization token. (Used to identify user id to tie the game to)
+
 Request body
 n               Int             Optional (used to set number of rules, defaults to 4)
 
@@ -102,6 +104,8 @@ POST base-url/play/guess
 
 Used to take a guess on a single rule. Uses token to identify user. Increases user's number of guesses by 1. 
 
+Requires authorization token. (Used to identify user id and their current game)
+
 Request body
 a               Int             Required (Must be between 1 to 5 inclusive)
 b               Int             Required (Must be between 1 to 5 inclusive)
@@ -109,7 +113,7 @@ c               Int             Required (Must be between 1 to 5 inclusive)
 r               Int             Required (Must be between 0 to n - 1 inclusive, where n is the number of rules. r is the index for the rule's id in the array returned by the start game)
 
 Response body
-result          Boolean         Wether if the guess was verified correct. 
+result          Boolean         Whether if the guess was verified correct. 
 
 Result codes
 200             Valid guess format (Check result body to see if guess was correct)
@@ -121,11 +125,43 @@ Result codes
 
 POST base-url/play/solve
 
-Used to submit a final answer. On correct, increases user's number of solves by 1. On incorrect, increases user's number of guesses by 10. 
+Used to submit a final answer. On correct, increases user's number of solves by 1. On incorrect, increases user's number of guesses by 10.
+
+Requires authorization token. (Used to identify user to update stats)
+
+Request body
+a               Int             Required (Must be between 1 to 5 inclusive)
+b               Int             Required (Must be between 1 to 5 inclusive)
+c               Int             Required (Must be between 1 to 5 inclusive)
+
+Response body
+result          Boolean         Whether if the guess was solve correct. 
+
+Result codes
+200             Valid guess format (Check result body to see if guess was correct)
+400             Invalid guess (Could be invalid parameter or the game hasn't started)
+401             Bad Token
+
 
 # Getting leaderboard
 
 GET base-url/stats
+
+Used to get the leadboard of top users.
+
+Request body
+skip           Int             Used in pagenation
+limit          Int             Used to
+
+Response body
+An array of scores with stats with this format
+{
+    user:
+    name:
+    score:
+    totalGuesses
+}
+
 
 # Getting User score
 
