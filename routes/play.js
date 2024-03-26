@@ -128,7 +128,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
             if (stats.solves < 100) {
                 score = 0
             }
-            await StatsModel.updateOne({user:req.user.id}, {score:score, solves: stats.solves})
+            await StatsModel.updateOne({user:req.user.id}, {score:score * 100, solves: stats.solves})
             res.status(200)
             res.send({result:true})
             return

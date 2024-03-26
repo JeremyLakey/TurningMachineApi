@@ -4,6 +4,14 @@ const tokenUtil = require('../utils/authToken')
 
 const statsRoutes = express.Router()
 
+
+const scrubStat = (stat) => {
+    delete stat.user
+    delete stat._id
+    delete stat.__v
+    console.log(stat)
+}
+
 statsRoutes.get("/", express.json(), async (req, res) => {
     console.log("Getting leaderboard")
     let skip = 0
@@ -19,7 +27,12 @@ statsRoutes.get("/", express.json(), async (req, res) => {
     try {
 
         const results = await StatsModel.find().limit(limit).sort({ score: 'desc',}).skip(skip)
-
+        let stats = []
+        for (result in results) {
+            let stat = result.toObject()
+            scrubStat(stat)
+            stats.push(stat)
+        }
         res.status(200)
         res.send(results)
     } catch (err) {
@@ -29,7 +42,6 @@ statsRoutes.get("/", express.json(), async (req, res) => {
     }
 })
 
-// TODO: Get's user score
 statsRoutes.get("/user", express.json(), async (req, res) => {
 
     if (!req.body || !req.body.name) { 
@@ -40,8 +52,10 @@ statsRoutes.get("/user", express.json(), async (req, res) => {
     try {
         const result = await StatsModel.findOne({name:req.body.name})
         if (result) {  
+            let stat = result.toObject()
+            scrubStat(stat)
             res.status(200)
-            res.send(result)
+            res.send(stat)
         }
         else {
             res.status(404)

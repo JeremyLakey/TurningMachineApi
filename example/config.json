@@ -2,8 +2,8 @@
     "username":"example",
     "password":"example",
     "url":"http://0.0.0.0:3005",
-    "numGames": 3,
+    "numGames": 100,
     "create":true,
     "delete":false,
-    "reset":false
+    "reset":true
 }
