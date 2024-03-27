@@ -62,20 +62,18 @@ statsRoutes.get("/user", express.json(), async (req, res) => {
             res.send({err:"Could not find user"})
         }
     } catch (err) {
-        res.status(404)
-        res.send({err:"Could not find user"})
+        res.status(500)
+        res.send({err:"Error finding user"})
     }
 
 })
 
 statsRoutes.delete("/reset", tokenUtil.validateAccessToken, async (req, res) => {
-    console.log(req.user)
-    console.log("Reseting score: " + req.user.username)
     try {
         let result = await StatsModel.findOneAndUpdate({name:req.user.username}, {score:0, solves:0, totalGuesses: 0})
         res.send(result)
     } catch (err) {
-        res.status(404)
+        res.status(500)
         res.send({err:"Could not reset score: " + err})
     }
         

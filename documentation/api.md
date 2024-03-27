@@ -113,7 +113,8 @@ c               Int             Required (Must be between 1 to 5 inclusive)
 r               Int             Required (Must be between 0 to n - 1 inclusive, where n is the number of rules. r is the index for the rule's id in the array returned by the start game)
 
 Response body
-result          Boolean         Whether if the guess was verified correct. 
+result          Boolean         Whether if the guess was verified correct.
+err             String          Only on error 
 
 Result codes
 200             Valid guess format (Check result body to see if guess was correct)
@@ -135,7 +136,8 @@ b               Int             Required (Must be between 1 to 5 inclusive)
 c               Int             Required (Must be between 1 to 5 inclusive)
 
 Response body
-result          Boolean         Whether if the guess was solve correct. 
+result          Boolean         Whether if the guess was solve correct.
+err             String          Only on error 
 
 Result codes
 200             Valid guess format (Check result body to see if guess was correct)
@@ -147,26 +149,63 @@ Result codes
 
 GET base-url/stats
 
-Used to get the leadboard of top users.
+Used to get the leaderboard of top users.
 
 Request body
-skip           Int             Used in pagenation
-limit          Int             Used to
+skip           Int             Used in pagenation to skip n records.
+limit          Int             Used to limit amount of records returned.
 
 Response body
 An array of scores with stats with this format
 {
-    user:
-    name:
-    score:
-    totalGuesses
+    name:           String
+    score:          Float
+    totalGuesses:   Int
+    solves:         Int
 }
+err             String          Only on error
 
+Result codes
+200             Got leaderboard
+500             Could not get leaderboard
 
 # Getting User score
 
 GET base-url/stats/user
 
+Used to get the stats of a single user. 
+
+Request body
+name            String          Required. Username of user
+
+Response body
+{
+    name:           String
+    score:          Float
+    totalGuesses:   Int
+    solves:         Int
+}
+err             String          Only on error
+
+Result codes
+200             Got user's stats
+400             Missing name in request body
+404             Could not find user
+500             Error finding user
+
+
 # Reset your score
 
 DELETE base-url/stats
+
+Used to reset the stats of a user.
+
+Requires authorization token. (Used to identify user to reset their stats)
+
+Response body
+err             String          Only on error
+
+Result codes
+200             Successfully reset user's score
+401             Bad token
+500             Failure to reset user's score
