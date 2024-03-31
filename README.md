@@ -27,7 +27,7 @@ See here for the [Server Api](./documentation/api.md) documentation. This descri
 
 Install node and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-Clone this repo locally
+Clone this repo locally '''git clone https://github.com/JeremyLakey/TurningMachineApi.git'''
 
 Set up a mongodb instance somewhere. Here is one unafiliated [hosting site](https://www.mongodb.com/products/platform/cloud) I used once (You can also set one up [locally too](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database)). Then updated the '''mongoDBPath''' value in the config.json file.
 
