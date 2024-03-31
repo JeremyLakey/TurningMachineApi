@@ -17,19 +17,19 @@ Tokens required requests should use the "Authorization" header with this value "
 
 # Create an account
 
-POST base-url/user
+**POST base-url/user**
 
 Used to create a new account on the api. Does not return a login token. 
 
-Request body 
+**Request body** 
 name            String          Required
 password        String          Required
 
-Response body
+**Response body**
 token           String          Only on success
 err             String          Only on error
 
-Error codes
+**Result codes**
 201             Created user
 401             Username already taken
 400             Bad request
@@ -37,19 +37,19 @@ Error codes
 
 # Login to account
 
-POST base-url/user/login
+**POST base-url/user/login**
 
 Used to login into an account and get an authorization token.
 
-Request body
+**Request body**
 name            String          Required
 password        String          Required
 
-Response body
+**Response body**
 token           String          Only on success
 err             String          Only on error
 
-Result codes
+**Result codes**
 201             Login successfully
 401             Incorrect user name or password
 400             Bad request
@@ -57,20 +57,20 @@ Result codes
 
 # Delete account
 
-DELETE base-url/user
+**DELETE base-url/user**
 
 Used to permanetly delete an account.
 
 Requires authorization token. (This token identifies the user to be deleted)
 
-No request body
+No **Request body**
 
-No response body on success
+No **Response body** on success
 
-Response body
+**Response body**
 err             String          Only on error
 
-Result codes
+**Result codes**
 200             Deleted user successfully
 401             Bad token
 404             Could not find user
@@ -79,20 +79,20 @@ Result codes
 
 # Start game
 
-POST base-url/play/start
+**POST base-url/play/start**
 
 Used to trigger the start of the game
 
 Requires authorization token. (Used to identify user id to tie the game to)
 
-Request body
+**Request body**
 n               Int             Optional (used to set number of rules, defaults to 4)
 
-Response body
+**Response body**
 (Just an array of rule id's on success)
 err             String          Only on error
 
-Result codes
+**Result codes**
 200             Successfully created game
 401             Bad token
 500             Internal server error
@@ -100,23 +100,23 @@ Result codes
 
 # Making a guess
 
-POST base-url/play/guess
+**POST base-url/play/guess**
 
 Used to take a guess on a single rule. Uses token to identify user. Increases user's number of guesses by 1. 
 
 Requires authorization token. (Used to identify user id and their current game)
 
-Request body
+**Request body**
 a               Int             Required (Must be between 1 to 5 inclusive)
 b               Int             Required (Must be between 1 to 5 inclusive)
 c               Int             Required (Must be between 1 to 5 inclusive)
 r               Int             Required (Must be between 0 to n - 1 inclusive, where n is the number of rules. r is the index for the rule's id in the array returned by the start game)
 
-Response body
+**Response body**
 result          Boolean         Whether if the guess was verified correct.
 err             String          Only on error 
 
-Result codes
+**Result codes**
 200             Valid guess format (Check result body to see if guess was correct)
 400             Invalid guess (Could be invalid parameter or the game hasn't started)
 401             Bad Token
@@ -124,22 +124,22 @@ Result codes
 
 # Attempting to solve
 
-POST base-url/play/solve
+**POST base-url/play/solve**
 
 Used to submit a final answer. On correct, increases user's number of solves by 1. On incorrect, increases user's number of guesses by 10.
 
 Requires authorization token. (Used to identify user to update stats)
 
-Request body
+**Request body**
 a               Int             Required (Must be between 1 to 5 inclusive)
 b               Int             Required (Must be between 1 to 5 inclusive)
 c               Int             Required (Must be between 1 to 5 inclusive)
 
-Response body
+**Response body**
 result          Boolean         Whether if the guess was solve correct.
 err             String          Only on error 
 
-Result codes
+**Result codes**
 200             Valid guess format (Check result body to see if guess was correct)
 400             Invalid guess (Could be invalid parameter or the game hasn't started)
 401             Bad Token
@@ -147,15 +147,15 @@ Result codes
 
 # Getting leaderboard
 
-GET base-url/stats
+**GET base-url/stats**
 
 Used to get the leaderboard of top users.
 
-Request body
+**Request body**
 skip           Int             Used in pagenation to skip n records.
 limit          Int             Used to limit amount of records returned.
 
-Response body
+**Response body**
 An array of scores with stats with this format
 {
     name:           String
@@ -165,20 +165,20 @@ An array of scores with stats with this format
 }
 err             String          Only on error
 
-Result codes
+**Result codes**
 200             Got leaderboard
 500             Could not get leaderboard
 
 # Getting User score
 
-GET base-url/stats/user
+**GET base-url/stats/user**
 
 Used to get the stats of a single user. 
 
-Request body
+**Request body**
 name            String          Required. Username of user
 
-Response body
+**Response body**
 {
     name:           String
     score:          Float
@@ -187,25 +187,25 @@ Response body
 }
 err             String          Only on error
 
-Result codes
+**Result codes**
 200             Got user's stats
-400             Missing name in request body
+400             Missing name in **Request body**
 404             Could not find user
 500             Error finding user
 
 
 # Reset your score
 
-DELETE base-url/stats
+**DELETE base-url/stats**
 
 Used to reset the stats of a user.
 
 Requires authorization token. (Used to identify user to reset their stats)
 
-Response body
+**Response body**
 err             String          Only on error
 
-Result codes
+**Result codes**
 200             Successfully reset user's score
 401             Bad token
 500             Failure to reset user's score
