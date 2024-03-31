@@ -29,7 +29,7 @@ Install node and npm (https://docs.npmjs.com/downloading-and-installing-node-js-
 
 Clone this repo locally `git clone https://github.com/JeremyLakey/TurningMachineApi.git`
 
-Set up a mongodb instance somewhere. Here is one unafiliated [hosting site](https://www.mongodb.com/products/platform/cloud) I used once (You can also set one up [locally too](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database)). Then updated the `mongoDBPath` value in the config.json file.
+Set up a mongodb instance somewhere. Here is one unaffiliated [hosting site](https://www.mongodb.com/products/platform/cloud) I used once (You can also set one up [locally too](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database)). Then updated the `mongoDBPath` value in the config.json file.
 
 Generate your own secret for making auth tokens. To do this with node, run this in the terminal `node` then run `require('crypto').randomBytes(64).toString('hex')`. Copy the output and paste it into the `secret` value in the config.json file
 
