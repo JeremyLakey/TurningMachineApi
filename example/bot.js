@@ -1,48 +1,47 @@
-const rules = require("./api/rules.js")
 const config = require("./config.json")
 const axios = require('axios')
-const api = require("./api/api.js")
+const client = require("tm-bot-client")
 
 const runGames = async () => {
-    api.setBaseUrl(config.url)
+    client.setBaseUrl(config.url)
     if (config.create) {
-        await api.createAccount(config.username, config.password)
+        await client.createAccount(config.username, config.password)
     }
 
-    await api.doLogin(config.username, config.password)
+    await client.doLogin(config.username, config.password)
 
     
-    console.log(await api.getLeaderBoard())
+    console.log(await client.getLeaderBoard())
 
     if (config.reset) {
-        console.log(await api.resetScore())
+        console.log(await client.resetScore())
     }
 
     for (let i = 0; i < config.numGames; i++) {
         await bot()
     }
     
-    console.log(await api.getScore(config.username))
+    console.log(await client.getScore(config.username))
 
     if (config.delete) {
-        await api.deleteAccount()
+        await client.deleteAccount()
     }
 }
 
 const bot = async () => {
     
     let numRules = Math.floor(Math.random() * 3 + 4)
-    let ruleNums = await api.startGame(numRules)
+    let ruleNums = await client.startGame(numRules)
 
     console.log(ruleNums)
     for (let i = 0; i < ruleNums.length; i++) {
-        console.log(rules[ruleNums[i]].description + '\n')
+        console.log(client.getDescription(i) + '\n')
     }
 
     let result = await guessAllNumbers(numRules)
 
     console.log(result)
-    console.log(await api.solve(result[0], result[1], result[2]))
+    console.log(await client.solve(result[0], result[1], result[2]))
     
 
 }
@@ -62,7 +61,7 @@ const guessAllNumbers = async (n) => {
 
 const guessAllRules = async (a, b, c, n) => {
     for (let i = 0; i < n; i++) {
-        let result = await api.guess(a,b,c,i)
+        let result = await client.guess(a,b,c,i)
         if (!result) {
             return false
         }
