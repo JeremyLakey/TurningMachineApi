@@ -11,11 +11,11 @@ You can use a prebuilt node.js client or build your own client to interact with 
 
 Install node and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-Initiate a your project '''npm init'''.
+Initiate a your project `npm init`.
 
-Run '''npm install tm-bot-client''' to install the client.
+Run `npm install tm-bot-client` to install the client.
 
-Import the client to a .js file with '''const tm-client = require("tm-bot-client")'''
+Import the client to a .js file with `const tm-client = require("tm-bot-client")`
 
 See here for more documentation on how to use the [prebuilt node client](./documentation/client.md).
 
@@ -27,12 +27,12 @@ See here for the [Server Api](./documentation/api.md) documentation. This descri
 
 Install node and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-Clone this repo locally '''git clone https://github.com/JeremyLakey/TurningMachineApi.git'''
+Clone this repo locally `git clone https://github.com/JeremyLakey/TurningMachineApi.git`
 
-Set up a mongodb instance somewhere. Here is one unafiliated [hosting site](https://www.mongodb.com/products/platform/cloud) I used once (You can also set one up [locally too](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database)). Then updated the '''mongoDBPath''' value in the config.json file.
+Set up a mongodb instance somewhere. Here is one unafiliated [hosting site](https://www.mongodb.com/products/platform/cloud) I used once (You can also set one up [locally too](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database)). Then updated the `mongoDBPath` value in the config.json file.
 
-Generate your own secret for making auth tokens. To do this with node, run this in the terminal '''node''' then run '''require('crypto').randomBytes(64).toString('hex')'''. Copy the output and paste it into the '''secret''' value in the config.json file
+Generate your own secret for making auth tokens. To do this with node, run this in the terminal `node` then run `require('crypto').randomBytes(64).toString('hex')`. Copy the output and paste it into the `secret` value in the config.json file
 
-Update the '''port''' value to a port that is [port forwarded](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide) and free.
+Update the `port` value to a port that is [port forwarded](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide) and free.
 
-Run '''node index.js''' in the project directory to start the server.
+Run `node index.js` in the project directory to start the server.
