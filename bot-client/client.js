@@ -31,7 +31,7 @@ const getDescription = (r) => {
     return rules[r].description
 }
 
-const getMaxMode = (r) => {
+const getNumModes = (r) => {
     return rules[r].maxMode
 }
 
@@ -43,9 +43,11 @@ const createAccount = async (username, password) => {
             password: password,
           }).then((response) => {
               console.log(response.data)
+              return response.data
           })
     } catch (err) {
         console.log('Create Account error ' + err)
+        return undefined
     }
 }
 
@@ -73,9 +75,11 @@ const doLogin = async (username, password) => {
             password: password,
             }).then((response) => {
                 token = response.data
+                return token
             })
     } catch (err) {
         console.log('Login error: ' + err)
+        return undefined
     }
 }
 
@@ -96,6 +100,7 @@ const startGame = async (n=4) => {
         return result.data
     } catch (err) {
         console.log('start error: ' + err)
+        return []
     }
 }
 
@@ -217,7 +222,7 @@ module.exports = {
     getRules,
     checkRule,
     getDescription,
-    getMaxMode,
+    getNumModes,
     createAccount,
     deleteAccount,
     doLogin,

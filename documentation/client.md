@@ -14,31 +14,76 @@ Run `npm install tm-bot-client` to install the client.
 Import the client to a .js file with `const tm-client = require("tm-bot-client")`
 
 
+## setBaseUrl(url: String) => void
 
-## setBaseUrl(url)
+Used to set the url for api calls. Must be set before using methods that make http calls. Returns nothing.
 
-## getRules()
 
-## async checkRule(a, b, c, r, m)
+## getRules() => List[Rule]
 
-## async getDescription(r)
+Returns a list of js objects of rules for the game. 
 
-## async getMaxMode(r)
+Each rule follows this format.
 
-## async createAccount(username, password)
+Rule:
+        {
+            description: String (describes the possible rules),
+            rule: (Int, Int, Int, Int) => Boolean (function for testing the rule)
+            maxMode: Int
+            mode
+        }
 
-## async deleteAccount()
 
-## async doLogin(username, password)
+## checkRule(a: Int, b: Int, c: Int, r: Int, m: Int) => Boolean
 
-## async startGame(n=4)
+Returns where the three Int combination (a, b, c) passes the rule (r) on mode (m). 
 
-## async guess(a, b, c, r)
+limitations
+1 <= a <= 5
+1 <= b <= 5
+1 <= c <= 5
+0 <= r <= 48
+0 <= m <= depends on rule (use getMaxMode(r))
 
-## async solve(a, b, c)
 
-## async resetScore()
+## getDescription(r: Int) => String
 
-## async getScore()
+Returns where a description of rule (r). Each rule is divided by it's modes, each mode is seperated by the ":" character. 
 
-## async getLeaderBoard()
+limitations
+0 <= r <= 48
+
+
+## getNumModes(r) => Int
+
+Returns the number of modes a rule (r) has.
+
+limitations
+0 <= r <= 48
+
+## async createAccount(username: String, password: String) => Undefined | Object
+
+Creates an account with username and password. Sets a jwt authentication token on success and returns undefined. On failure, returns an err object
+
+err object
+        {
+            err: String (description of error)
+        }
+
+## async deleteAccount() =>
+
+
+
+## async doLogin(username, password) => String
+
+## async startGame(n=4) => List[Int]
+
+## async guess(a, b, c, r) => Boolean
+
+## async solve(a, b, c) => Boolean
+
+## async resetScore() => Void
+
+## async getScore() => Score
+
+## async getLeaderBoard() => List[Score]
