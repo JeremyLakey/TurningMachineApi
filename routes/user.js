@@ -4,6 +4,7 @@ const StatsModel = require('../model/schema/statsSchema')
 const GameModel = require('../model/schema/gameSchema')
 const userRoutes = express.Router()
 const salty = require('../utils/salty')
+const logging = require('../utils/logging')
 const tokenUtil = require('../utils/authToken')
 
 // create user
@@ -12,12 +13,13 @@ userRoutes.post('/', express.json(), async (req, res) => {
         try {  
             let user = await UserModel.create({name:req.body.name, password: await salty.saltPassword(req.body.password)})
             await StatsModel.create({user: user._id, name: user.name})
-            let token = tokenUtil.generateAccessToken(name, user._id)
+            let token = tokenUtil.generateAccessToken(user.name, user._id)
+            logging("Create user success for user " + req.body.name)
             res.status(201)
             res.send(token)
         }
         catch (err) {
-            console.log(err)
+            logging(err)
             res.status(403)
             res.send({err:"Could not create user: " + err})
         }
@@ -37,11 +39,13 @@ userRoutes.post('/login', express.json(), async (req, res) => {
 
         if (req.body.password && user && await salty.validateUser(req.body.password, user.password)) {
             let token = tokenUtil.generateAccessToken(name, user._id)
+            logging("Login success for user " + req.body.name)
             res.status(201)
             res.send(token)
         }
         else {
-            console.log(req.body)
+            logging("Invalid login attempt")
+            logging(req.body)
             res.status(401)
             res.send({err:"Not Authorized"})
         }
@@ -69,10 +73,11 @@ userRoutes.delete('/', tokenUtil.validateAccessToken, async (req, res) => {
         
         await GameModel.deleteOne({user: req.user.id})
     
+        logging("Deleted user:" + req.user.username)
         res.status(200)
         res.send()
     } catch (err) {
-        console.log("Error deleting user: " + err)
+        logging("Error deleting user: " + err)
         res.status(500)
         res.send({err:"Could not delete user"})
     }

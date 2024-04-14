@@ -6,13 +6,14 @@ const GameModel = require('../model/schema/gameSchema')
 
 const gameGenerater = require('../model/game')
 const tokenUtil = require('../utils/authToken')
+const logging = require('../utils/logging')
 
 const rules = require('../model/rules/rule')
 
 playRoutes.post("/start", [tokenUtil.validateAccessToken, express.json()], async (req, res) => {
     let numRules = Math.floor(Math.random() * 3 + 4)
-    console.log("Starting game")
-    console.log(req.body)
+    logging("Starting game:")
+    logging(req.body)
     if (req.body && req.body.n && req.body.n >=4 && req.body.n <=6) {
         numRules = req.body.n
     }
@@ -25,18 +26,20 @@ playRoutes.post("/start", [tokenUtil.validateAccessToken, express.json()], async
             await StatsModel.updateOne({user:req.user.id}, {totalGuesses: stat.totalGuesses + 10})
             await GameModel.updateOne({user:req.user.id}, {user: req.user.id, name:req.user.name, rules: game.rules, modes: game.modes})
             
+            logging("New game started for " + req.user.name)
             res.status(200)
             res.send(game.rules)
 
         }
         else {
             GameModel.create({user: req.user.id, name:req.user.name, rules: game.rules, modes: game.modes})
-
+            logging("New game started for " + req.user.name)
             res.status(200)
             res.send(game.rules)
 
         }
     } catch(err) {
+        logging("Error starting game for " + req.user.name)
         res.status(500)
         res.send({error:err})
     }
@@ -52,6 +55,8 @@ const validateGuess = (body) => {
 playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async(req, res) => {
     // takes number and verifier
     if (!validateGuess(req.body)) {
+        logging("Invalid Guess:")
+        logging(req.body)
         res.status(400)
         res.send({err: "Invalid number"})
         return
@@ -60,17 +65,14 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async
     const game = await GameModel.findOne({user: req.user.id});
 
     if (!game) {
+        logging("Error: Game not started for user " + req.user.name)
         res.status(400)
         res.send({err: "Start Game First"})
         return
     }
 
     if (typeof req.body.r === 'undefined' || req.body.r < 0 || req.body.r >= game.rules.length) {
-        console.log(game.rules.length)
-        console.log(req.body)
-        console.log(!req.body.r)
-        console.log(req.body.r < 0)
-        console.log(req.body.r >= game.rules.length)
+        logging("Invalid rule for guess: " + r)
         res.status(400)
         res.send({err: "Invalid Guess"})
         return
@@ -80,7 +82,7 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async
 
     // verify on verifier
     if (rules[game.rules[req.body.r]].rule(req.body.a, req.body.b, req.body.c, game.modes[req.body.r])) {
-        //console.log("Correct " + req.body.a + " " + req.body.b + " " + req.body.c)
+        logging("Valid guess: a=" + req.body.a + " b=" + req.body.b + " c=" + req.body.c)
         res.status(200)
         res.send({result:true})
         return
@@ -88,7 +90,7 @@ playRoutes.post("/guess", [tokenUtil.validateAccessToken, express.json()], async
 
     // returns pass or not
     
-    //console.log("Wrong " + req.body.a + " " + req.body.b + " " + req.body.c)
+    logging("Wrong guess: a=" + req.body.a + " b=" + req.body.b + " c=" + req.body.c)
     res.status(200)
     res.send({result:false})
 })
@@ -98,6 +100,8 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
     
     try {
         if (!validateGuess(req.body)) {
+            logging("Invalid Solve:")
+            logging(req.body)
             res.status(400)
             res.send({err: "Invalid number"})
             return
@@ -106,6 +110,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
         const game = await GameModel.findOne({user: req.user.id});
 
         if (!game) {
+            logging("Error: Game not started for user " + req.user.name)
             res.status(400)
             res.send({err: "Start Game First"})
             return
@@ -114,13 +119,14 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
         let passedAll = true
         for (let i = 0 ; i < game.rules.length; i++) {
             if (!rules[game.rules[i]].rule(req.body.a, req.body.b, req.body.c, game.modes[i])) {
+                logging("Failed rule: " + rules[game.rules[i]].description)
                 passedAll = false;
                 break
             }
         }
 
         if (passedAll) {
-            console.log("Passed solve!")
+            logging("Passed solve!")
             await GameModel.deleteOne({user:req.user.id})
             let stats = await StatsModel.findOne({user:req.user.id})
             stats.solves += 1
@@ -133,7 +139,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
             res.send({result:true})
             return
         }
-        console.log("Failed solve!")
+        logging("Failed solve!")
     
 
         // failure
@@ -142,7 +148,7 @@ playRoutes.post("/solve", [tokenUtil.validateAccessToken, express.json()], async
         res.status(200)
         res.send({result:false})
     } catch (err) {
-        console.log("Critial error solving game: " + err)
+        logging("Critial error solving game: " + err)
         res.status(500)
         res.send({err:"Did not finish checking answer"})
     }

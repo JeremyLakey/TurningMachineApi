@@ -1,6 +1,6 @@
 {
   "name": "tm-bot-client",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A module for interacting with a game api I made for testing ai bots",
   "main": "client.js",
   "scripts": {
