@@ -1,5 +1,6 @@
 {
     "port": 3005,
     "mongoDBPath": "mongodb://0.0.0.0:27017/turning",
-    "secret": "Keep your secrets to yourself, but you can use require('crypto').randomBytes(64).toString('hex') in node to generate one yourself"
+    "secret": "Keep your secrets to yourself, but you can use require('crypto').randomBytes(64).toString('hex') in node to generate one yourself",
+    "debugMode": true
 }
