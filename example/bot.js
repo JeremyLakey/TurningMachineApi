@@ -3,12 +3,14 @@ const axios = require('axios')
 const client = require("tm-bot-client")
 
 const runGames = async () => {
+    client.setDebugMode(true)
     client.setBaseUrl(config.url)
     if (config.create) {
         await client.createAccount(config.username, config.password)
     }
-
-    await client.doLogin(config.username, config.password)
+    else {
+        await client.doLogin(config.username, config.password)
+    }
 
     
     console.log(await client.getLeaderBoard())
