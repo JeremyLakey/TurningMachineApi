@@ -12,11 +12,11 @@ const doLog = (log) => {
 const maybeWarn = (needToken = false) => {
     if (needToken && !token) {
         doLog("Need to get token first")
-        throw new error("Need to get token")
+        throw new Error("Need to get token")
     }
     if (!baseUrl) {
         doLog("Set up base url first")
-        throw new error("Need to get token")
+        throw new Error("Need to get token")
     }
 }
 
@@ -47,8 +47,9 @@ const createAccount = async (username, password) => {
             name: username,
             password: password,
           }).then((response) => {
-              doLog(response.data)
-              return response.data
+            token = response.data
+            doLog("Created Account. AuthToken: " + token)
+            return token
           })
     } catch (err) {
         doLog('Create Account error ' + err)
@@ -80,11 +81,21 @@ const doLogin = async (username, password) => {
             password: password,
             }).then((response) => {
                 token = response.data
+                doLog("Login complete. AuthToken: " + token)
                 return token
             })
     } catch (err) {
         doLog('Login error: ' + err)
         return undefined
+    }
+}
+
+const setToken = async (t) => {
+    if (typeof t === 'string') {
+        token = t
+    }
+    else {
+        throw new Error("token must be of type 'String'")
     }
 }
 
@@ -247,4 +258,5 @@ module.exports = {
     getScore,
     getLeaderBoard,
     setDebugMode,
+    setToken,
 }
