@@ -3,14 +3,19 @@ const axios = require('axios')
 
 var token;
 var baseUrl;
+var doLogging = false;
+
+const doLog = (log) => {
+    if (doLogging) console.log(log)
+}
 
 const maybeWarn = (needToken = false) => {
     if (needToken && !token) {
-        console.log("Need to get token first")
+        doLog("Need to get token first")
         throw new error("Need to get token")
     }
     if (!baseUrl) {
-        console.log("Set up base url first")
+        doLog("Set up base url first")
         throw new error("Need to get token")
     }
 }
@@ -42,11 +47,11 @@ const createAccount = async (username, password) => {
             name: username,
             password: password,
           }).then((response) => {
-              console.log(response.data)
+              doLog(response.data)
               return response.data
           })
     } catch (err) {
-        console.log('Create Account error ' + err)
+        doLog('Create Account error ' + err)
         return undefined
     }
 }
@@ -62,7 +67,7 @@ const deleteAccount = async () => {
           })
         return true
     } catch (err) {
-        console.log('Delete Account error: ' + err)
+        doLog('Delete Account error: ' + err)
         return false
     }
 }
@@ -78,7 +83,7 @@ const doLogin = async (username, password) => {
                 return token
             })
     } catch (err) {
-        console.log('Login error: ' + err)
+        doLog('Login error: ' + err)
         return undefined
     }
 }
@@ -99,7 +104,7 @@ const startGame = async (n=4) => {
         })
         return result.data
     } catch (err) {
-        console.log('start error: ' + err)
+        doLog('start error: ' + err)
         return []
     }
 }
@@ -123,7 +128,7 @@ const guess = async (a, b, c, r) => {
         return result.data.result
     }
     catch (err) {
-        console.log("guess error: rule:" + r + " error:" + err)
+        doLog("guess error: rule:" + r + " error:" + err)
         return false
     }
 }
@@ -146,7 +151,7 @@ const solve = async (a, b, c) => {
         return result.data.result
     }
     catch (err) {
-        console.log("Solve error : " + err)
+        doLog("Solve error : " + err)
         return false
     }
 }
@@ -170,7 +175,7 @@ const getLeaderBoard = async (num = 10, skip = 0) => {
         return result.data
     }
     catch (err) {
-        console.log("Get Leader Board error: " + err)
+        doLog("Get Leader Board error: " + err)
         return false
     }
 }
@@ -193,7 +198,7 @@ const getScore = async (username) => {
         return result.data
     }
     catch (err) {
-        console.log("Get Leader Board error: " + err)
+        doLog("Get Leader Board error: " + err)
         return false
     }
 }
@@ -211,8 +216,17 @@ const resetScore = async () => {
         return result.data
     }
     catch (err) {
-        console.log("Reset Score error: " + err)
+        doLog("Reset Score error: " + err)
         return false
+    }
+}
+
+const setDebugMode = (mode = true) => {
+    if (typeof mode === 'boolean') {
+        doLogging = mode
+    }
+    else {
+        throw new Error("Error in setDebugMode(mode). mode msut be 'boolean' type")
     }
 }
 
@@ -232,5 +246,5 @@ module.exports = {
     resetScore,
     getScore,
     getLeaderBoard,
-    
+    setDebugMode,
 }
